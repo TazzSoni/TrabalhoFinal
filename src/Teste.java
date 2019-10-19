@@ -21,9 +21,11 @@ public class Teste {
 		SQLiteParser parser = new SQLiteParser(cts);
 		parser.setBuildParseTree(true);
 		ParseTree tree = parser.parse();
-				
+			
+                SQLiteBaseListener listener = new SQLiteBaseListener();
+                
 		ParseTreeWalker p = new ParseTreeWalker();
-		p.walk(new SQLiteBaseListener(), tree);
+		p.walk(listener, tree);
 
 		// agora vamos pegar as informacoes que o listener capturou e processar o comando 
 	}
