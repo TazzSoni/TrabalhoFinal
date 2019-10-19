@@ -5,6 +5,15 @@
  */
 package View;
 
+import br.udesc.udescdb.SQLiteBaseListener;
+import br.udesc.udescdb.SQLiteLexer;
+import br.udesc.udescdb.SQLiteParser;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
 /**
  *
  * @author tasso
@@ -16,7 +25,7 @@ public class Tela extends javax.swing.JFrame {
      */
     public Tela() {
         initComponents();
-       setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -81,6 +90,11 @@ public class Tela extends javax.swing.JFrame {
         jLabel3.setText("Nome da Database");
 
         jButton1.setText("Rodar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Limpar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -165,49 +179,45 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-jTaQuery.setText(" ");        // TODO add your handling code here:
+        jTaQuery.setText(" ");        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cxSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cxSelecionarActionPerformed
-cxCriar.setSelected(false);        // TODO add your handling code here:
+        cxCriar.setSelected(false);        // TODO add your handling code here:
     }//GEN-LAST:event_cxSelecionarActionPerformed
 
     private void cxCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cxCriarActionPerformed
-cxSelecionar.setSelected(false);        // TODO add your handling code here:
+        cxSelecionar.setSelected(false);        // TODO add your handling code here:
     }//GEN-LAST:event_cxCriarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        String syntax = jTaQuery.getText();
+        CodePointCharStream inputStream = CharStreams.fromString(syntax);
+        SQLiteLexer lexer = new SQLiteLexer(inputStream);
+        CommonTokenStream cts = new CommonTokenStream(lexer);
+        SQLiteParser parser = new SQLiteParser(cts);
+        parser.setBuildParseTree(true);
+        ParseTree tree = parser.parse();
+
+        SQLiteBaseListener listener = new SQLiteBaseListener();
+
+        ParseTreeWalker p = new ParseTreeWalker();
+        p.walk(listener, tree);      
+        System.out.println(listener.getCurrentCommand().toString());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
+        //String select = "select * from xpto";
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Tela().setVisible(true);
             }
+
         });
     }
 

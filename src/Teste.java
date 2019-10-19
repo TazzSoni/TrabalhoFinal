@@ -1,3 +1,4 @@
+import View.Tela;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -11,10 +12,11 @@ import br.udesc.udescdb.SQLiteParser;
 public class Teste {
 
 	public static void main(String[] args) {
-		String create = "create table xpto (col1 int, col2 char(20), col3 float)";
+		/*String create = "";
 		String insert = "insert into xpto (col1, col2) values (1, 'abc')";
 		//String select = "select * from xpto";
-		
+		Tela tela = new Tela();
+                tela.setVisible(true);
 		CodePointCharStream inputStream = CharStreams.fromString(insert);
 		SQLiteLexer lexer = new SQLiteLexer(inputStream);
 		CommonTokenStream cts = new CommonTokenStream(lexer);
@@ -27,7 +29,7 @@ public class Teste {
 		ParseTreeWalker p = new ParseTreeWalker();
 		p.walk(listener, tree);
 
-                System.out.println(listener.getCurrentCommand().toString());
+                System.out.println(listener.getCurrentCommand().toString());*/
 
                 
 		// agora vamos pegar as informacoes que o listener capturou e processar o comando 
