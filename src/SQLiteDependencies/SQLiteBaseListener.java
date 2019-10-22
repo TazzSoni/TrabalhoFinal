@@ -4,6 +4,7 @@ package SQLiteDependencies;
 import Commands.Command;
 import Commands.CreateTable;
 import Commands.Insert;
+import Commands.Select;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -1590,6 +1591,9 @@ public class SQLiteBaseListener implements SQLiteListener {
             
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
+            command.addColumn(ctx.getText());
+        } else if(this.currentCommand instanceof Select) {
+            Select command = (Select) this.currentCommand;
             command.addColumn(ctx.getText());
         }
 
