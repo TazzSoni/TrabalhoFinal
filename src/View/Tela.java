@@ -5,9 +5,10 @@
  */
 package View;
 
-import br.udesc.udescdb.SQLiteBaseListener;
-import br.udesc.udescdb.SQLiteLexer;
-import br.udesc.udescdb.SQLiteParser;
+import Entities.Database;
+import SQLiteDependencies.SQLiteBaseListener;
+import SQLiteDependencies.SQLiteLexer;
+import SQLiteDependencies.SQLiteParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -192,8 +193,7 @@ public class Tela extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String syntax = jTaQuery.getText();
-        CodePointCharStream inputStream = CharStreams.fromString(syntax);
+        CodePointCharStream inputStream = CharStreams.fromString(jTaQuery.getText());
         SQLiteLexer lexer = new SQLiteLexer(inputStream);
         CommonTokenStream cts = new CommonTokenStream(lexer);
         SQLiteParser parser = new SQLiteParser(cts);
@@ -205,14 +205,13 @@ public class Tela extends javax.swing.JFrame {
         ParseTreeWalker p = new ParseTreeWalker();
         p.walk(listener, tree);      
         System.out.println(listener.getCurrentCommand().toString());
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
-        //String select = "select * from xpto";
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Tela().setVisible(true);
