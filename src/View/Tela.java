@@ -5,10 +5,20 @@
  */
 package View;
 
+import Commands.Insert;
 import Entities.Database;
 import SQLiteDependencies.SQLiteBaseListener;
 import SQLiteDependencies.SQLiteLexer;
 import SQLiteDependencies.SQLiteParser;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -27,6 +37,7 @@ public class Tela extends javax.swing.JFrame {
     public Tela() {
         initComponents();
         setLocationRelativeTo(null);
+        listener = new SQLiteBaseListener();
     }
 
     /**
@@ -52,6 +63,7 @@ public class Tela extends javax.swing.JFrame {
         jBLimpar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTaOuput = new javax.swing.JTextArea();
+        jBLer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -108,6 +120,13 @@ public class Tela extends javax.swing.JFrame {
         jTaOuput.setRows(5);
         jScrollPane3.setViewportView(jTaOuput);
 
+        jBLer.setText("Ler");
+        jBLer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBLerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,7 +140,9 @@ public class Tela extends javax.swing.JFrame {
                                 .addGap(244, 244, 244)
                                 .addComponent(jBRodar)
                                 .addGap(138, 138, 138)
-                                .addComponent(jBLimpar))
+                                .addComponent(jBLimpar)
+                                .addGap(62, 62, 62)
+                                .addComponent(jBLer))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -164,8 +185,9 @@ public class Tela extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBRodar)
-                    .addComponent(jBLimpar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                    .addComponent(jBLimpar)
+                    .addComponent(jBLer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,13 +222,25 @@ public class Tela extends javax.swing.JFrame {
         parser.setBuildParseTree(true);
         ParseTree tree = parser.parse();
 
-        SQLiteBaseListener listener = new SQLiteBaseListener();
+       
 
         ParseTreeWalker p = new ParseTreeWalker();
-        p.walk(listener, tree);      
+        p.walk(listener, tree);
         System.out.println(listener.getCurrentCommand().toString());
-        
+
+
     }//GEN-LAST:event_jBRodarActionPerformed
+
+    private void jBLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLerActionPerformed
+        try {
+            listener.readData();
+        } catch (IOException ex) {
+            System.out.println("Não Leu" + ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jBLerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,11 +253,13 @@ public class Tela extends javax.swing.JFrame {
 
         });
     }
+    public SQLiteBaseListener listener;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton cxCriar;
     private javax.swing.JRadioButton cxSelecionar;
+    private javax.swing.JButton jBLer;
     private javax.swing.JButton jBLimpar;
     private javax.swing.JButton jBRodar;
     private javax.swing.JComboBox<String> jCbDataBase;

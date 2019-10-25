@@ -5,6 +5,10 @@ import Commands.Command;
 import Commands.CreateTable;
 import Commands.Insert;
 import Commands.Select;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -1319,6 +1323,12 @@ public class SQLiteBaseListener implements SQLiteListener {
     public void enterLiteral_value(SQLiteParser.Literal_valueContext ctx) {
         Insert command = (Insert) this.currentCommand;
         command.addValue(ctx.getText());
+        try {
+            command.gravarEmBanco(command);
+        } catch (IOException ex) {
+            Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -1517,8 +1527,34 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterTable_name(SQLiteParser.Table_nameContext ctx) {
-        Insert command = (Insert) this.currentCommand;
-        command.setTableName(ctx.getText());
+
+        if (this.currentCommand instanceof CreateTable) {
+            CreateTable command = (CreateTable) this.currentCommand;
+            command.addColumn(ctx.getText());
+            try {
+                command.gravarEmBanco(command);
+            } catch (IOException ex) {
+                System.out.println("Não Gravou, erro: " + ex);
+            }
+
+        } else if (this.currentCommand instanceof Insert) {
+            Insert command = (Insert) this.currentCommand;
+            command.addColumn(ctx.getText());
+            try {
+                command.gravarEmBanco(command);
+            } catch (IOException ex) {
+                System.out.println("Não Gravou, erro: " + ex);
+            }
+        } else if (this.currentCommand instanceof Select) {
+            Select command = (Select) this.currentCommand;
+            command.addColumn(ctx.getText());
+            try {
+                command.gravarEmBanco(command);
+            } catch (IOException ex) {
+                System.out.println("Não Gravou, erro: " + ex);
+            }
+        }
+
     }
 
     /**
@@ -1588,15 +1624,29 @@ public class SQLiteBaseListener implements SQLiteListener {
         if (this.currentCommand instanceof CreateTable) {
             CreateTable command = (CreateTable) this.currentCommand;
             command.addColumn(ctx.getText());
-            
+
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
             command.addColumn(ctx.getText());
-        } else if(this.currentCommand instanceof Select) {
+        } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
             command.addColumn(ctx.getText());
         }
 
+    }
+
+    public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {
+        if (this.currentCommand instanceof CreateTable) {
+            CreateTable command = (CreateTable) this.currentCommand;
+            command.LerBancoCreate();
+
+        } else if (this.currentCommand instanceof Insert) {
+            Insert command = (Insert) this.currentCommand;
+            command.LerBancoInsert();
+        } else if (this.currentCommand instanceof Select) {
+            Select command = (Select) this.currentCommand;
+            command.LerBancoSelect();
+        }
     }
 
     /**

@@ -40,6 +40,8 @@
                               <Component id="jBRodar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
                               <Component id="jBLimpar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                              <Component id="jBLer" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane1" alignment="0" pref="762" max="32767" attributes="0"/>
                           <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
@@ -98,8 +100,9 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jBRodar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jBLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jBLer" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="62" max="32767" attributes="0"/>
+              <EmptySpace pref="75" max="32767" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane3" min="-2" pref="166" max="-2" attributes="0"/>
@@ -212,5 +215,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="jBLer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ler"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBLerActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
