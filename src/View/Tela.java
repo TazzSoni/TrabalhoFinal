@@ -226,7 +226,7 @@ public class Tela extends javax.swing.JFrame {
 
         ParseTreeWalker p = new ParseTreeWalker();
         p.walk(listener, tree);
-        System.out.println(listener.getCurrentCommand().toString());
+        System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
 
 
     }//GEN-LAST:event_jBRodarActionPerformed

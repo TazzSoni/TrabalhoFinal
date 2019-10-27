@@ -43,13 +43,7 @@ public class Select extends Command implements Serializable {
         this.columns.add(column);
     }
 
-    public void gravarEmBanco(Select select) throws FileNotFoundException, IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("testeTable.dat"));
-        out.writeObject(select);
-        out.close();
-    }
-    
-    public void LerBancoSelect() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public void lerBancoSelect() throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("testeTable.dat"));
         Select u = (Select) in.readObject();
         System.out.println(u);

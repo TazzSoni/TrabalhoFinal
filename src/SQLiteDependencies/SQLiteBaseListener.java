@@ -294,6 +294,12 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitCreate_table_stmt(SQLiteParser.Create_table_stmtContext ctx) {
+        CreateTable command = (CreateTable) this.currentCommand;
+        try {
+            command.run();
+        } catch (IOException ex) {
+            Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -1324,7 +1330,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         Insert command = (Insert) this.currentCommand;
         command.addValue(ctx.getText());
         try {
-            command.gravarEmBanco(command);
+            command.gravarEmBanco();
         } catch (IOException ex) {
             Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1530,29 +1536,19 @@ public class SQLiteBaseListener implements SQLiteListener {
 
         if (this.currentCommand instanceof CreateTable) {
             CreateTable command = (CreateTable) this.currentCommand;
-            command.addColumn(ctx.getText());
-            try {
-                command.gravarEmBanco(command);
-            } catch (IOException ex) {
-                System.out.println("Não Gravou, erro: " + ex);
-            }
+            command.setTableName(ctx.getText());
 
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
-            command.addColumn(ctx.getText());
+            command.setTableName(ctx.getText());
             try {
-                command.gravarEmBanco(command);
+                command.gravarEmBanco();
             } catch (IOException ex) {
                 System.out.println("Não Gravou, erro: " + ex);
             }
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
-            command.addColumn(ctx.getText());
-            try {
-                command.gravarEmBanco(command);
-            } catch (IOException ex) {
-                System.out.println("Não Gravou, erro: " + ex);
-            }
+           
         }
 
     }
@@ -1645,7 +1641,7 @@ public class SQLiteBaseListener implements SQLiteListener {
             command.LerBancoInsert();
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
-            command.LerBancoSelect();
+            command.lerBancoSelect();
         }
     }
 

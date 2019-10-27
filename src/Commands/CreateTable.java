@@ -1,5 +1,6 @@
 package Commands;
 
+import Entities.Table;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,8 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTable extends Command implements Serializable{
-
+public class CreateTable extends Command {
+    
     private String tableName;
     private ArrayList<String> columns = new ArrayList<String>();
     private ArrayList<String> types = new ArrayList<String>();
@@ -43,17 +44,16 @@ public class CreateTable extends Command implements Serializable{
     public String toString() {
         return "CreateTable{" + "tableName=" + tableName + ", columns=" + columns + ", types=" + types + '}';
     }
-    
-    public void gravarEmBanco(CreateTable table) throws FileNotFoundException, IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("testeTable.dat"));
-        out.writeObject(table);
-        out.close();
+
+    public void run() throws IOException {
+        Table table = new Table(this.tableName, this.columns, this.types);
+        table.persist();
     }
-    
+
     public void LerBancoCreate() throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("testeTable.dat"));
-        CreateTable u = (CreateTable) in.readObject();
-        System.out.println(u);
+        Table u = (Table) in.readObject();
+        System.out.println("leu isso:" + u);
         in.close();
     }
 

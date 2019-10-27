@@ -32,9 +32,9 @@ public class Insert extends Command implements Serializable {
         this.values.add(value);
     }
 
-    public void gravarEmBanco(Insert esse) throws FileNotFoundException, IOException {
+    public void gravarEmBanco() throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("testeTable.dat"));
-        out.writeObject(esse);
+        out.writeObject(this);
         out.close();
     }
 
