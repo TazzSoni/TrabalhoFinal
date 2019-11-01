@@ -1,15 +1,12 @@
 package Commands;
 
-import Entities.Table;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CreateTable extends Command {
     
@@ -40,21 +37,20 @@ public class CreateTable extends Command {
     public void addType(String type) {
         this.types.add(type);
     }
-
+    
+    @Override
+    public void run() {
+        byte data[] = {1,1,1,1};
+        Path file = Paths.get("C:/Users/Lucas Dolsan/Desktop/teste.dat");
+        try {
+            Files.write(file, data);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Override
     public String toString() {
         return "CreateTable{" + "tableName=" + tableName + ", columns=" + columns + ", types=" + types + '}';
     }
-
-    public void run() throws IOException {
-        Table table = new Table(this.tableName, this.columns, this.types);
-        table.persist();
-    }
-
-    public void LerBancoCreate() throws FileNotFoundException, IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("testeTable.dat"));
-        Table u = (Table) in.readObject();
-        System.out.println("leu isso:" + u);
-        in.close();
-    }
-
 }

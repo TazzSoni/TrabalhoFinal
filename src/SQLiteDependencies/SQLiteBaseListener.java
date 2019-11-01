@@ -23,7 +23,7 @@ public class SQLiteBaseListener implements SQLiteListener {
     private String tableName;
     private Command currentCommand;
 
-    public Object getCurrentCommand() {
+    public Command getCurrentCommand() {
         return this.currentCommand;
     }
 
@@ -295,11 +295,7 @@ public class SQLiteBaseListener implements SQLiteListener {
     @Override
     public void exitCreate_table_stmt(SQLiteParser.Create_table_stmtContext ctx) {
         CreateTable command = (CreateTable) this.currentCommand;
-        try {
-            command.run();
-        } catch (IOException ex) {
-            Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        command.run();
     }
 
     /**
@@ -1329,11 +1325,7 @@ public class SQLiteBaseListener implements SQLiteListener {
     public void enterLiteral_value(SQLiteParser.Literal_valueContext ctx) {
         Insert command = (Insert) this.currentCommand;
         command.addValue(ctx.getText());
-        try {
-            command.gravarEmBanco();
-        } catch (IOException ex) {
-            Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //command.gravarEmBanco();
 
     }
 
@@ -1541,11 +1533,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
             command.setTableName(ctx.getText());
-            try {
-                command.gravarEmBanco();
-            } catch (IOException ex) {
-                System.out.println("Não Gravou, erro: " + ex);
-            }
+
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
            
@@ -1624,6 +1612,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
             command.addColumn(ctx.getText());
+            
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
             command.addColumn(ctx.getText());
@@ -1634,14 +1623,13 @@ public class SQLiteBaseListener implements SQLiteListener {
     public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {
         if (this.currentCommand instanceof CreateTable) {
             CreateTable command = (CreateTable) this.currentCommand;
-            command.LerBancoCreate();
 
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
-            command.LerBancoInsert();
+
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
-            command.lerBancoSelect();
+
         }
     }
 

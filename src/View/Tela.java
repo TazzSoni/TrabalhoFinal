@@ -5,6 +5,7 @@
  */
 package View;
 
+import Commands.Command;
 import Commands.Insert;
 import Entities.Database;
 import SQLiteDependencies.SQLiteBaseListener;
@@ -187,7 +188,7 @@ public class Tela extends javax.swing.JFrame {
                     .addComponent(jBRodar)
                     .addComponent(jBLimpar)
                     .addComponent(jBLer))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,11 +223,10 @@ public class Tela extends javax.swing.JFrame {
         parser.setBuildParseTree(true);
         ParseTree tree = parser.parse();
 
-       
-
         ParseTreeWalker p = new ParseTreeWalker();
         p.walk(listener, tree);
         System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
+        listener.getCurrentCommand().run();
 
 
     }//GEN-LAST:event_jBRodarActionPerformed

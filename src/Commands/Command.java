@@ -1,6 +1,9 @@
 package Commands;
 
-public class Command {
+public abstract class Command {
 
+    public Command() {
+    }
 
+    public abstract void run();
 }

@@ -1,15 +1,8 @@
 package Commands;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Select extends Command implements Serializable {
+public class Select extends Command {
 
     private ArrayList<String> columns = new ArrayList<String>();
     private String from;
@@ -42,11 +35,9 @@ public class Select extends Command implements Serializable {
     public void addColumn(String column) {
         this.columns.add(column);
     }
-
-    public void lerBancoSelect() throws FileNotFoundException, IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("testeTable.dat"));
-        Select u = (Select) in.readObject();
-        System.out.println(u);
-        in.close();
+    
+    @Override
+    public void run(){
+    
     }
 }
