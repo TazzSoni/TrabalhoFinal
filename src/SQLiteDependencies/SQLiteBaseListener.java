@@ -295,7 +295,11 @@ public class SQLiteBaseListener implements SQLiteListener {
     @Override
     public void exitCreate_table_stmt(SQLiteParser.Create_table_stmtContext ctx) {
         CreateTable command = (CreateTable) this.currentCommand;
-        command.run();
+        try {
+            command.run();
+        } catch (Exception ex) {
+            Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
