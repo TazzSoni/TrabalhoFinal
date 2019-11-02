@@ -46,7 +46,12 @@ public class CreateTable extends Command {
     public void run() throws Exception {
         DataOutputStream out = new DataOutputStream(new FileOutputStream(tableName + ".dat"));
 
-        out.writeBoolean(true);
+        for (int i = 0; i < columns.size(); i++) {
+            String aux = columns.get(i);
+            out.writeUTF(aux);
+            System.out.println(columns.get(i));
+        }
+        /*out.writeBoolean(true);
         out.writeByte(10); // 1 byte
         out.writeChar('A'); // 2 bytes
         out.writeDouble(100.36); // 8 bytes
@@ -56,16 +61,15 @@ public class CreateTable extends Command {
         out.writeUTF("testando"); // 10 bytes
         out.close();
 
-       
-       // 1 byte
-        /*byte data[] = {1,1,1,1};
+        // 1 byte
+        byte data[] = {1, 1, 1, 1};
         Path file = Paths.get("C:/Users/tasso/Desktop/teste.dat");
         try {
             Files.write(file, data);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(CreateTable.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }  */
     }
 
     @Override

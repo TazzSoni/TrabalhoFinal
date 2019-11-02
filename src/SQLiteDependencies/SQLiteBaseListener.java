@@ -5,6 +5,8 @@ import Commands.Command;
 import Commands.CreateTable;
 import Commands.Insert;
 import Commands.Select;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -1540,7 +1542,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
-           
+
         }
 
     }
@@ -1616,7 +1618,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
             command.addColumn(ctx.getText());
-            
+
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
             command.addColumn(ctx.getText());
@@ -1627,6 +1629,9 @@ public class SQLiteBaseListener implements SQLiteListener {
     public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {
         if (this.currentCommand instanceof CreateTable) {
             CreateTable command = (CreateTable) this.currentCommand;
+            DataInputStream in = new DataInputStream(new FileInputStream("Saporra.dat"));
+            System.out.println(in.readUTF());
+            in.close();
 
         } else if (this.currentCommand instanceof Insert) {
             Insert command = (Insert) this.currentCommand;
