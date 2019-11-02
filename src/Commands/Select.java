@@ -1,5 +1,6 @@
 package Commands;
 
+import Entities.Database;
 import java.util.ArrayList;
 
 public class Select extends Command {
@@ -37,7 +38,7 @@ public class Select extends Command {
     }
     
     @Override
-    public void run(){
+    public void run(Database database){
     
     }
 }

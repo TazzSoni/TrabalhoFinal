@@ -1,5 +1,6 @@
 package Commands;
 
+import Entities.Database;
 import java.util.ArrayList;
 
 public class Insert extends Command  {
@@ -25,7 +26,7 @@ public class Insert extends Command  {
     }
 
     @Override
-    public void run() {
+    public void run(Database database) {
         
     }
 

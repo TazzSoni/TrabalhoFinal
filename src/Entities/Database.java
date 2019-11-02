@@ -1,9 +1,10 @@
 package Entities;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Database {
-
+    private ArrayList<File> tables = new ArrayList<File>();
     private File instance;
     private String name;
     private String rootPath;
@@ -32,17 +33,26 @@ public class Database {
         this.name = name;
     }
 
-    public String getRootPath() {
-        return rootPath;
+    public void addTable(File file){
+        this.tables.add(file);
     }
 
-    public void setRootPath(String rootPath) {
-        this.rootPath = rootPath;
+    public ArrayList<File> getTables() {
+        return tables;
+    }
+
+    public void setTables(ArrayList<File> tables) {
+        this.tables = tables;
+    }
+    
+    
+    public String getPath() {
+        return this.instance.getAbsolutePath() + "\\";
     }
 
     @Override
     public String toString() {
         return "Database{" + "instance=" + instance + ", name=" + name + ", rootPath=" + rootPath + '}';
     }
-    
+
 }

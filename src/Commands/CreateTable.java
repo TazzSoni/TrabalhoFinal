@@ -1,6 +1,8 @@
 package Commands;
 
+import Entities.Database;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,14 +45,19 @@ public class CreateTable extends Command {
     }
 
     @Override
-    public void run() throws Exception {
-        DataOutputStream out = new DataOutputStream(new FileOutputStream(tableName + ".dat"));
-
+    public void run(Database database) throws Exception {
+        String path = database.getPath() + tableName + ".dat";
+        
+        DataOutputStream out = new DataOutputStream(new FileOutputStream(path));
+        
         for (int i = 0; i < columns.size(); i++) {
             String aux = columns.get(i);
             out.writeUTF(aux);
             System.out.println(columns.get(i));
         }
+        
+        database.addTable(new File(path));
+        
         /*out.writeBoolean(true);
         out.writeByte(10); // 1 byte
         out.writeChar('A'); // 2 bytes

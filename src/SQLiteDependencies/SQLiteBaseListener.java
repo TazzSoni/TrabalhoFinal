@@ -5,7 +5,9 @@ import Commands.Command;
 import Commands.CreateTable;
 import Commands.Insert;
 import Commands.Select;
+import Entities.Database;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
+    private Database database = new Database("C:/Users/Lucas Dolsan/Desktop/", "bancasso");
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -298,7 +301,7 @@ public class SQLiteBaseListener implements SQLiteListener {
     public void exitCreate_table_stmt(SQLiteParser.Create_table_stmtContext ctx) {
         CreateTable command = (CreateTable) this.currentCommand;
         try {
-            command.run();
+            command.run(this.database);
         } catch (Exception ex) {
             Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1629,10 +1632,18 @@ public class SQLiteBaseListener implements SQLiteListener {
     public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {
         if (this.currentCommand instanceof CreateTable) {
             CreateTable command = (CreateTable) this.currentCommand;
-            DataInputStream in = new DataInputStream(new FileInputStream("Saporra.dat"));
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
+
+            File table = this.database.getTables().get(0);
+
+            DataInputStream in = new DataInputStream(new FileInputStream(table.getAbsoluteFile()));
+
+            command.getColumns().forEach((column) -> {
+                try {
+                    System.out.println(in.readUTF());
+                } catch (IOException ex) {
+                    Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             in.close();
 
         } else if (this.currentCommand instanceof Insert) {
