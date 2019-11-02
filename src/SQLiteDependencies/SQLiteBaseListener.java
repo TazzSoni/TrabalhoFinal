@@ -1631,6 +1631,8 @@ public class SQLiteBaseListener implements SQLiteListener {
             CreateTable command = (CreateTable) this.currentCommand;
             DataInputStream in = new DataInputStream(new FileInputStream("Saporra.dat"));
             System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
             in.close();
 
         } else if (this.currentCommand instanceof Insert) {

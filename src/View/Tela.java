@@ -230,11 +230,7 @@ public class Tela extends javax.swing.JFrame {
         Database db = new Database("C:/Users/Lucas Dolsan/Desktop/", "bancasso");
         System.out.println(db.toString());
         System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
-        try {
-            listener.getCurrentCommand().run();
-        } catch (Exception ex) {
-            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
 
     }//GEN-LAST:event_jBRodarActionPerformed
