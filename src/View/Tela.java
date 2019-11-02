@@ -225,6 +225,10 @@ public class Tela extends javax.swing.JFrame {
 
         ParseTreeWalker p = new ParseTreeWalker();
         p.walk(listener, tree);
+        
+        
+        Database db = new Database("C:/Users/Lucas Dolsan/Desktop/", "bancasso");
+        System.out.println(db.toString());
         System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
         try {
             listener.getCurrentCommand().run();
