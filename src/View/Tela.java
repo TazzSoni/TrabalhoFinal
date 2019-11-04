@@ -58,13 +58,16 @@ public class Tela extends javax.swing.JFrame {
         jCbDataBase = new javax.swing.JComboBox<>();
         cxCriar = new javax.swing.JRadioButton();
         cxSelecionar = new javax.swing.JRadioButton();
-        jTfNomeDatabase = new javax.swing.JTextField();
+        jTfDiretórioDb = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jBRodar = new javax.swing.JButton();
         jBLimpar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTaOuput = new javax.swing.JTextArea();
         jBLer = new javax.swing.JButton();
+        jTdNomeDataBase = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jBtVai = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -94,14 +97,14 @@ public class Tela extends javax.swing.JFrame {
             }
         });
 
-        jTfNomeDatabase.setToolTipText("");
-        jTfNomeDatabase.addActionListener(new java.awt.event.ActionListener() {
+        jTfDiretórioDb.setToolTipText("");
+        jTfDiretórioDb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTfNomeDatabaseActionPerformed(evt);
+                jTfDiretórioDbActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Nome da Database");
+        jLabel3.setText("Nome ");
 
         jBRodar.setText("Rodar");
         jBRodar.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +128,21 @@ public class Tela extends javax.swing.JFrame {
         jBLer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBLerActionPerformed(evt);
+            }
+        });
+
+        jTdNomeDataBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTdNomeDataBaseActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Diretório");
+
+        jBtVai.setText("Vai!!");
+        jBtVai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtVaiActionPerformed(evt);
             }
         });
 
@@ -155,17 +173,30 @@ public class Tela extends javax.swing.JFrame {
                             .addGap(800, 800, 800))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(59, 59, 59)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jCbDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cxSelecionar))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cxCriar)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTfNomeDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(155, 155, 155)))))
+                                    .addComponent(cxSelecionar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cxCriar)
+                                    .addGap(294, 294, 294))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(0, 0, Short.MAX_VALUE)
+                                            .addComponent(jLabel3))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jCbDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel4)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTfDiretórioDb, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                                        .addComponent(jTdNomeDataBase))
+                                    .addGap(72, 72, 72)))))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(376, 376, 376)
+                .addComponent(jBtVai)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,12 +205,22 @@ public class Tela extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cxCriar)
                     .addComponent(cxSelecionar))
-                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCbDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jTfDiretórioDb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCbDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTfNomeDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTdNomeDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(83, 83, 83)
+                .addGap(22, 22, 22)
+                .addComponent(jBtVai)
+                .addGap(3, 3, 3)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,7 +229,7 @@ public class Tela extends javax.swing.JFrame {
                     .addComponent(jBRodar)
                     .addComponent(jBLimpar)
                     .addComponent(jBLer))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,9 +239,9 @@ public class Tela extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTfNomeDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTfNomeDatabaseActionPerformed
+    private void jTfDiretórioDbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTfDiretórioDbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTfNomeDatabaseActionPerformed
+    }//GEN-LAST:event_jTfDiretórioDbActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
         jTaQuery.setText(" ");        // TODO add your handling code here:
@@ -244,6 +285,21 @@ public class Tela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jBLerActionPerformed
 
+    private void jTdNomeDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTdNomeDataBaseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTdNomeDataBaseActionPerformed
+
+    private void jBtVaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVaiActionPerformed
+        
+        if (cxCriar.isSelected()){
+            listener.setDataBase(new Database(jTfDiretórioDb.getText(), jTdNomeDataBase.getText()));
+        jTaOuput.setText(listener.getDataBase().toString());
+        }else if(cxSelecionar.isSelected()){
+            jTaOuput.setText("Falta implementar ainda");
+        }
+        
+    }//GEN-LAST:event_jBtVaiActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,6 +312,7 @@ public class Tela extends javax.swing.JFrame {
         });
     }
     public SQLiteBaseListener listener;
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -264,14 +321,17 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JButton jBLer;
     private javax.swing.JButton jBLimpar;
     private javax.swing.JButton jBRodar;
+    private javax.swing.JButton jBtVai;
     private javax.swing.JComboBox<String> jCbDataBase;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTaOuput;
     private javax.swing.JTextArea jTaQuery;
-    private javax.swing.JTextField jTfNomeDatabase;
+    private javax.swing.JTextField jTdNomeDataBase;
+    private javax.swing.JTextField jTfDiretórioDb;
     // End of variables declaration//GEN-END:variables
 }

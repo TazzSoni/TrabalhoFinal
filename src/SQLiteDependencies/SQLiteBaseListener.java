@@ -26,7 +26,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("C:/Users/Lucas Dolsan/Desktop/", "bancasso");
+    private Database database;
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -34,6 +34,12 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     public String getTableName() {
         return tableName;
+    }
+    public Database getDataBase(){
+        return this.database;
+    }
+    public void setDataBase(Database dataBase){
+        this.database = dataBase;
     }
 
     /**
