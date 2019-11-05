@@ -26,7 +26,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database;
+    private Database database = new Database("C:\\Users\\09046167976\\Desktop\\REPO\\", "bancasso");
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -38,8 +38,8 @@ public class SQLiteBaseListener implements SQLiteListener {
     public Database getDataBase(){
         return this.database;
     }
-    public void setDataBase(Database dataBase){
-        this.database = dataBase;
+    public void setDataBase(Database database){
+        this.database = database;
     }
 
     /**
@@ -576,6 +576,8 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitInsert_stmt(SQLiteParser.Insert_stmtContext ctx) {
+        Insert command = (Insert) this.currentCommand;
+        command.run(this.database);
     }
 
     /**

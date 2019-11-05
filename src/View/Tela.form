@@ -134,7 +134,7 @@
                   <Component id="jBLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jBLer" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="118" max="32767" attributes="0"/>
+              <EmptySpace pref="135" max="32767" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane3" min="-2" pref="166" max="-2" attributes="0"/>

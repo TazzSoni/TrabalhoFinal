@@ -1,12 +1,16 @@
 package Commands;
 
 import Entities.Database;
+import Entities.Metadata;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,17 +51,31 @@ public class CreateTable extends Command {
     @Override
     public void run(Database database) throws Exception {
         String path = database.getPath() + tableName + ".dat";
-        
-        DataOutputStream out = new DataOutputStream(new FileOutputStream(path));
-        
+        File table = new File(path);
+        database.addTable(table);
+        table.createNewFile();
+
+        int[] byteSize = new int[this.columns.size()];
+
         for (int i = 0; i < columns.size(); i++) {
-            String aux = columns.get(i);
-            out.writeUTF(aux);
-            System.out.println(columns.get(i));
+            if (this.types.get(i).contains("char")) {
+                String length = this.types.get(i).split("(")[1].split(")")[0];
+                byteSize[i] = Integer.parseInt(length);
+            }
+            byteSize[i] = 8;
         }
-        
-        database.addTable(new File(path));
-        
+
+        Metadata metadata = new Metadata(this.columns, this.types, byteSize, tableName);
+        database.addMetadata(metadata);
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(database.getPath() + tableName + ".meta")));
+        oos.writeObject(metadata);
+
+        //RandomAccessFile raf = new RandomAccessFile(file, "rw" ); 
+//        for (int i = 0; i < columns.size(); i++) {
+//            String aux = columns.get(i);
+//            out.writeUTF(aux);
+//            System.out.println(columns.get(i));
+//        }
         /*out.writeBoolean(true);
         out.writeByte(10); // 1 byte
         out.writeChar('A'); // 2 bytes

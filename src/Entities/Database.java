@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Database {
+
     private ArrayList<File> tables = new ArrayList<File>();
+    private ArrayList<Metadata> tablesMeta = new ArrayList<Metadata>();
     private File instance;
     private String name;
     private String rootPath;
@@ -33,8 +35,45 @@ public class Database {
         this.name = name;
     }
 
-    public void addTable(File file){
+    public void addTable(File file) {
         this.tables.add(file);
+    }
+
+    private int findMetadataIndex(String tableName) {
+        for (Metadata metadata : this.tablesMeta) {
+            if (metadata.getTableName().equals(tableName)) {
+                return this.tablesMeta.indexOf(metadata);
+            }
+        }
+        return -1;
+    }
+
+    public Metadata findMetadata(String tableName) {
+        return this.tablesMeta.get(this.findMetadataIndex(tableName));
+    }
+
+    public File findTable(String tableName) {
+        return this.tables.get(this.findMetadataIndex(tableName));
+    }
+
+    public void addMetadata(Metadata metadata) {
+        this.tablesMeta.add(metadata);
+    }
+
+    public ArrayList<Metadata> getTablesMeta() {
+        return tablesMeta;
+    }
+
+    public void setTablesMeta(ArrayList<Metadata> tablesMeta) {
+        this.tablesMeta = tablesMeta;
+    }
+
+    public String getRootPath() {
+        return rootPath;
+    }
+
+    public void setRootPath(String rootPath) {
+        this.rootPath = rootPath;
     }
 
     public ArrayList<File> getTables() {
@@ -44,8 +83,7 @@ public class Database {
     public void setTables(ArrayList<File> tables) {
         this.tables = tables;
     }
-    
-    
+
     public String getPath() {
         return this.instance.getAbsolutePath() + "\\";
     }
