@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<notebook>
+	<fabricante>Acer</fabricante>
+	<!-- comentario -->
+	<processador>
+		<marca>AMD</marca>
+		<velocidade unid="GHz">1.8</velocidade>
+	</processador>
+	<memoria capac="500" unid="MB" />
+</notebook>

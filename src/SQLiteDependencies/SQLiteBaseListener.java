@@ -6,6 +6,7 @@ import Commands.CreateTable;
 import Commands.Insert;
 import Commands.Select;
 import Entities.Database;
+import View.Tela;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,9 +14,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -50,6 +57,27 @@ public class SQLiteBaseListener implements SQLiteListener {
         this.database = database;
     }
 
+    public boolean validarXML(String nomeArquivo) {
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        Schema schema;
+        try {
+            schema = schemaFactory.newSchema(new File("udescdb.xsd"));
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(new File(nomeArquivo + ".xml")));
+            JOptionPane.showMessageDialog(null, "Arquivo Validado");
+            return true;
+        } catch (SAXException ex) {
+            JOptionPane.showMessageDialog(null, "Arquivo não Válido");
+            return false;
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado");
+            return false;
+        } catch (IOException ex) {
+            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
     public void insertXML(String nomeArquivo) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setIgnoringComments(true);
@@ -57,13 +85,14 @@ public class SQLiteBaseListener implements SQLiteListener {
 
         DocumentBuilder db = dbf.newDocumentBuilder();
 
-        Document doc = db.parse(new File(nomeArquivo+".xml"));
+        Document doc = db.parse(new File(nomeArquivo + ".xml"));
 
         Insert insert = new Insert();
         NamedNodeMap atrib = doc.getElementsByTagName("table").item(0).getAttributes();
         insert.setTableName(atrib.getNamedItem("name").getNodeValue());
         insert.addColumn(doc.getElementsByTagName("name").item(0).getTextContent());
         insert.addValue(doc.getElementsByTagName("value").item(0).getTextContent());
+        //print apenas para ver se está carregando
         System.out.println(insert.toString());
         //comentado pq está dando erro com o database
         //insert.run(database);

@@ -5,21 +5,20 @@
  */
 package View;
 
-import Commands.Command;
-import Commands.Insert;
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import Entities.Database;
 import SQLiteDependencies.SQLiteBaseListener;
 import SQLiteDependencies.SQLiteLexer;
 import SQLiteDependencies.SQLiteParser;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
@@ -293,9 +292,8 @@ public class Tela extends javax.swing.JFrame {
 
         ParseTreeWalker p = new ParseTreeWalker();
         p.walk(listener, tree);
-        
+
         System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
-       
 
 
     }//GEN-LAST:event_jBRodarActionPerformed
@@ -303,7 +301,7 @@ public class Tela extends javax.swing.JFrame {
     private void jBLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLerActionPerformed
         try {
             listener.readData();
-            
+
         } catch (IOException ex) {
             System.out.println("Não Leu" + ex);
         } catch (ClassNotFoundException ex) {
@@ -317,17 +315,20 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_jTdNomeDataBaseActionPerformed
 
     private void jBtVaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVaiActionPerformed
-        
-        if (cxCriar.isSelected()){
+
+        if (cxCriar.isSelected()) {
             listener.setDataBase(new Database(jTfDiretórioDb.getText(), jTdNomeDataBase.getText()));
-        jTaOuput.setText(listener.getDataBase().toString());
-        }else if(cxSelecionar.isSelected()){
+            jTaOuput.setText(listener.getDataBase().toString());
+        } else if (cxSelecionar.isSelected()) {
             jTaOuput.setText("Falta implementar ainda");
         }
-        
+
     }//GEN-LAST:event_jBtVaiActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(listener.validarXML(jTfXML.getText())){
+            
+
         try {
             listener.insertXML(jTfXML.getText());
         } catch (ParserConfigurationException ex) {
@@ -336,6 +337,10 @@ public class Tela extends javax.swing.JFrame {
             Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(null, "Arquivo carregado com Sucesso");
+        }else{
+        JOptionPane.showMessageDialog(null, "Arquivo Não carregado");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -351,7 +356,7 @@ public class Tela extends javax.swing.JFrame {
         });
     }
     public SQLiteBaseListener listener;
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
