@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,5 +58,6 @@ public class Insert extends Command {
     public String toString() {
         return "Insert{" + "tableName=" + tableName + ", columns=" + columns + ", values=" + values + '}';
     }
+
 
 }

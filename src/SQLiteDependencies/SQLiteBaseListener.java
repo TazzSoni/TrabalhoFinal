@@ -26,7 +26,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("C:\\Users\\09046167976\\Desktop\\REPO\\", "bancasso");
+    private Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
 
     public Command getCurrentCommand() {
         return this.currentCommand;

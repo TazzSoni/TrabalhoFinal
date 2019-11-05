@@ -57,5 +57,10 @@ public class Metadata implements Serializable {
     public void setByteSize(int[] byteSize) {
         this.byteSize = byteSize;
     }
+
+    @Override
+    public String toString() {
+        return "Metadata{" + "tableName=" + tableName + ", recordSize=" + recordSize + ", columns=" + columns + ", types=" + types + ", byteSize=" + byteSize + '}';
+    }
     
 }

@@ -59,10 +59,12 @@ public class CreateTable extends Command {
 
         for (int i = 0; i < columns.size(); i++) {
             if (this.types.get(i).contains("char")) {
-                String length = this.types.get(i).split("(")[1].split(")")[0];
+                String str = this.types.get(i);
+                String length = str.substring(str.indexOf("(") + 1, str.indexOf(")"));
                 byteSize[i] = Integer.parseInt(length);
+            } else {
+                byteSize[i] = 8;
             }
-            byteSize[i] = 8;
         }
 
         Metadata metadata = new Metadata(this.columns, this.types, byteSize, tableName);
