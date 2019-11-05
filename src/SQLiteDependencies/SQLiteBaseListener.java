@@ -13,9 +13,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.xml.sax.SAXException;
 
 /**
  * This class provides an empty implementation of {@link SQLiteListener}, which
@@ -26,7 +32,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
+    private Database database = new Database("C:\\Users\\tasso\\Desktop\\", "bancasso");
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -35,11 +41,32 @@ public class SQLiteBaseListener implements SQLiteListener {
     public String getTableName() {
         return tableName;
     }
-    public Database getDataBase(){
+
+    public Database getDataBase() {
         return this.database;
     }
-    public void setDataBase(Database database){
+
+    public void setDataBase(Database database) {
         this.database = database;
+    }
+
+    public void insertXML(String nomeArquivo) throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setIgnoringComments(true);
+        dbf.setIgnoringElementContentWhitespace(true);
+
+        DocumentBuilder db = dbf.newDocumentBuilder();
+
+        Document doc = db.parse(new File(nomeArquivo+".xml"));
+
+        Insert insert = new Insert();
+        NamedNodeMap atrib = doc.getElementsByTagName("table").item(0).getAttributes();
+        insert.setTableName(atrib.getNamedItem("name").getNodeValue());
+        insert.addColumn(doc.getElementsByTagName("name").item(0).getTextContent());
+        insert.addValue(doc.getElementsByTagName("value").item(0).getTextContent());
+        System.out.println(insert.toString());
+        //comentado pq está dando erro com o database
+        //insert.run(database);
     }
 
     /**

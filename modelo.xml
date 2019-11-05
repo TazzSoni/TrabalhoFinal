@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inserts>
+  <db name="???">
+    <table name="vamosver">
+      <column>
+          <name>colTeste</name>
+          <value>1234</value>
+      </column>
+    </table>
+  </db>
+</inserts>
