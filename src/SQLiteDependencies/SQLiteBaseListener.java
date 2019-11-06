@@ -30,16 +30,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.xml.sax.SAXException;
 
-/**
- * This class provides an empty implementation of {@link SQLiteListener}, which
- * can be extended to create a listener which only needs to handle a subset of
- * the available methods.
- */
 public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("C:\\Users\\tasso\\Desktop\\", "bancasso");
+    private Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
 
     public Command getCurrentCommand() {
         return this.currentCommand;

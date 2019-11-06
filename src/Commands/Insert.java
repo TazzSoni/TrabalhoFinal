@@ -40,12 +40,20 @@ public class Insert extends Command {
 
         try {
             RandomAccessFile raf = new RandomAccessFile(table, "rw");
-
+            //roda o comando Insert com RandomAccessFile
             for (String value : this.values) {
+                //para cara valor no insert, faça:
+                //coloca o pointer no final do arquivo
+                raf.seek(raf.length());
+                //busca o indice do valor
                 int index = this.values.indexOf(value);
-                raf.write(value.getBytes(), 0, metadata.getByteSize()[index]);
+                // (considerando que é tudo char(n)) formata a string a ser escrita
+                // portanto:
+                // char(8) -> [ , , l,u,c,a,s]
+                // cada: char = 2 bytes
+                raf.writeChars(String.format("%1$" + (metadata.getByteSize()[index]) + "s", value));
             }
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Insert.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -58,6 +66,5 @@ public class Insert extends Command {
     public String toString() {
         return "Insert{" + "tableName=" + tableName + ", columns=" + columns + ", values=" + values + '}';
     }
-
 
 }
