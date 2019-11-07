@@ -91,10 +91,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         //print apenas para ver se está carregando
         System.out.println("método no listener" + command.toString());
 
-        //comentado pq está dando erro com o database
-<<<<<<< HEAD
-       insert.run(database);
-=======
+
         command.run(this.database);
     }
 
@@ -122,7 +119,7 @@ public class SQLiteBaseListener implements SQLiteListener {
             Select command = (Select) this.currentCommand;
 
         }
->>>>>>> master
+
     }
 
     /**

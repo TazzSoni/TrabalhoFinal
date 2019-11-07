@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inserts>
   <db name="???">
-<<<<<<< HEAD
-    <table name="vamodenovo">
+    <table name="maisuma">
       <column>
           <name>col1</name>
-          <value>4321</value>
-=======
-    <table name="elamesmo">
-      <column>
-          <name>col1</name>
-          <value>321</value>
->>>>>>> master
+          <value>979</value>
       </column>
     </table>
   </db>
