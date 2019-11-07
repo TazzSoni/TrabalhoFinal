@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inserts>
   <db name="???">
-    <table name="maisuma">
+    <table name="essa">
       <column>
           <name>col1</name>
           <value>979</value>
+      </column>
+      <column>
+          <name>col2</name>
+          <value>'opaaaa'</value>
       </column>
     </table>
   </db>
