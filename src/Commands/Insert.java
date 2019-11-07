@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +50,20 @@ public class Insert extends Command {
                 // portanto:
                 // char(8) -> [ , , l,u,c,a,s]
                 // cada: char = 2 bytes
-                raf.writeChars(String.format("%1$" + (metadata.getByteSize()[index]) + "s", value));
+                if (metadata.getTypes().get(index).contains("char")) {
+                    int maxLength = metadata.getByteSize()[index];
+                    // corta a String no tamanho máximo necessário
+                    // e se for menor, preenche o restante com espaços em branco
+
+                    if (value.length() > maxLength) {
+                        value = value.substring(0, maxLength);
+                    }
+                    raf.writeChars(String.format("%1$" + maxLength + "s", value));
+                    
+                } else if (metadata.getTypes().get(index).contains("int")) {
+                    raf.writeInt(Integer.parseInt(value));
+                }
+                System.out.println("table length: " + raf.length());
             }
 
         } catch (FileNotFoundException ex) {

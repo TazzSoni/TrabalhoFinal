@@ -50,9 +50,11 @@ public class CreateTable extends Command {
             if (this.types.get(i).contains("char")) {
                 String str = this.types.get(i);
                 String length = str.substring(str.indexOf("(") + 1, str.indexOf(")"));
-                byteSize[i] = Integer.parseInt(length);
-            } else {
-                byteSize[i] = 8;
+                byteSize[i] = Integer.parseInt(length) * 2;
+            } else if (this.types.get(i).contains("int")) {
+                byteSize[i] = 4;
+            } else if (this.types.get(i).contains("boolean")) {
+                byteSize[i] = 4;
             }
         }
 

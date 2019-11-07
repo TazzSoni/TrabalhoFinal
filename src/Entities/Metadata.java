@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Metadata implements Serializable {
+
     private String tableName;
     private int recordSize;
     private ArrayList<String> columns;
@@ -12,10 +13,15 @@ public class Metadata implements Serializable {
 
     public Metadata(ArrayList<String> columns, ArrayList<String> types, int[] byteSize, String tableName) {
         this.tableName = tableName;
-        this.recordSize = 0;
         this.columns = columns;
         this.types = types;
         this.byteSize = byteSize;
+        this.recordSize = 0;
+       
+        for (int i : this.byteSize) {
+            this.recordSize += i;
+        }
+        System.out.println(this.toString()); 
     }
 
     public String getTableName() {
@@ -62,5 +68,5 @@ public class Metadata implements Serializable {
     public String toString() {
         return "Metadata{" + "tableName=" + tableName + ", recordSize=" + recordSize + ", columns=" + columns + ", types=" + types + ", byteSize=" + byteSize + '}';
     }
-    
+
 }
