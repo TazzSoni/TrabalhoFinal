@@ -34,7 +34,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
+    private Database database = new Database("C:\\Users\\tasso\\Desktop\\", "bancasso");
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -74,6 +74,8 @@ public class SQLiteBaseListener implements SQLiteListener {
     }
 
     public void insertXML(String nomeArquivo) throws ParserConfigurationException, SAXException, IOException {
+        this.currentCommand = new Insert();
+        Insert command = (Insert) this.currentCommand;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setIgnoringComments(true);
         dbf.setIgnoringElementContentWhitespace(true);
@@ -82,15 +84,41 @@ public class SQLiteBaseListener implements SQLiteListener {
 
         Document doc = db.parse(new File(nomeArquivo + ".xml"));
 
-        Insert insert = new Insert();
         NamedNodeMap atrib = doc.getElementsByTagName("table").item(0).getAttributes();
-        insert.setTableName(atrib.getNamedItem("name").getNodeValue());
-        insert.addColumn(doc.getElementsByTagName("name").item(0).getTextContent());
-        insert.addValue(doc.getElementsByTagName("value").item(0).getTextContent());
+        command.setTableName(atrib.getNamedItem("name").getNodeValue());
+        command.addColumn(doc.getElementsByTagName("name").item(0).getTextContent());
+        command.addValue(doc.getElementsByTagName("value").item(0).getTextContent());
         //print apenas para ver se está carregando
-        System.out.println(insert.toString());
+        System.out.println("método no listener" + command.toString());
+
         //comentado pq está dando erro com o database
-        //insert.run(database);
+        command.run(this.database);
+    }
+
+    public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {
+        if (this.currentCommand instanceof CreateTable) {
+            CreateTable command = (CreateTable) this.currentCommand;
+
+            File table = this.database.getTables().get(0);
+
+            DataInputStream in = new DataInputStream(new FileInputStream(table.getAbsoluteFile()));
+
+            command.getColumns().forEach((column) -> {
+                try {
+                    System.out.println(in.readUTF());
+                } catch (IOException ex) {
+                    Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            in.close();
+
+        } else if (this.currentCommand instanceof Insert) {
+            Insert command = (Insert) this.currentCommand;
+
+        } else if (this.currentCommand instanceof Select) {
+            Select command = (Select) this.currentCommand;
+
+        }
     }
 
     /**
@@ -1686,32 +1714,6 @@ public class SQLiteBaseListener implements SQLiteListener {
             command.addColumn(ctx.getText());
         }
 
-    }
-
-    public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {
-        if (this.currentCommand instanceof CreateTable) {
-            CreateTable command = (CreateTable) this.currentCommand;
-
-            File table = this.database.getTables().get(0);
-
-            DataInputStream in = new DataInputStream(new FileInputStream(table.getAbsoluteFile()));
-
-            command.getColumns().forEach((column) -> {
-                try {
-                    System.out.println(in.readUTF());
-                } catch (IOException ex) {
-                    Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            in.close();
-
-        } else if (this.currentCommand instanceof Insert) {
-            Insert command = (Insert) this.currentCommand;
-
-        } else if (this.currentCommand instanceof Select) {
-            Select command = (Select) this.currentCommand;
-
-        }
     }
 
     /**
