@@ -34,7 +34,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
+    private Database database = new Database("C:\\Users\\tasso\\Desktop\\", "bancasso");
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -90,7 +90,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         //print apenas para ver se está carregando
         System.out.println(insert.toString());
         //comentado pq está dando erro com o database
-        //insert.run(database);
+       insert.run(database);
     }
 
     /**
