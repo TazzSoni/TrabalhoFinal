@@ -39,9 +39,8 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database;
+    private Database database = new Database("", "bancasso");
     ArrayList<String> ret ;
-    String local = "";
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -94,7 +93,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         Element root = doc.getDocumentElement();
         System.out.println(root.getNodeName());
 
-        printFilhos(root.getChildNodes());
+        iteraXML(root.getChildNodes());
         
 
         NamedNodeMap atrib = doc.getElementsByTagName("table").item(0).getAttributes();
@@ -115,12 +114,12 @@ public class SQLiteBaseListener implements SQLiteListener {
         command.run(this.database);
     }
 
-    private ArrayList<String> printFilhos(NodeList filhos) {
+    private ArrayList<String> iteraXML(NodeList filhos) {
 
         for (int i = 0; i < filhos.getLength(); i++) {
             Node filho = filhos.item(i);
             if (filho.getChildNodes().getLength() > 0) {
-                printFilhos(filho.getChildNodes());
+                iteraXML(filho.getChildNodes());
             } else {
                 if (filho.getNodeValue().trim().length() > 0) {
                     ret.add(filho.getNodeValue());
