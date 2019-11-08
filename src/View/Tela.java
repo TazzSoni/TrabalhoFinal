@@ -37,10 +37,7 @@ public class Tela extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         listener = new SQLiteBaseListener();
         Database database = new Database("", "bancasso");
-<<<<<<< Updated upstream
         listener.setDatabase(database);
-=======
->>>>>>> Stashed changes
         try {
             database.loadTables();
         } catch (IOException | ClassNotFoundException ex) {
