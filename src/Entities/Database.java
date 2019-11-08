@@ -13,7 +13,7 @@ public class Database {
     private ArrayList<Metadata> tablesMeta = new ArrayList<Metadata>();
     private File instance;
     private String name;
-    private String rootPath = "databases";
+    private String rootPath = "databases\\";
 
     public Database(String name) {
         this.name = name;
