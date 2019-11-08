@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inserts>
-  <db name="???">
-    <table name="essa">
-      <column>
-          <name>col1</name>
-          <value>456</value>
-      </column>
-      <column>
-          <name>col2</name>
-          <value>'cruiz'</value>
-      </column>
-    </table>
-  </db>
+    <db name="???">
+        <table name="teste">
+            <column>
+                <name>col1</name>
+                <value>cruiz</value>
+            </column>
+        </table>
+    </db>
 </inserts>

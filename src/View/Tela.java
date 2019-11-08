@@ -14,7 +14,9 @@ import Entities.Database;
 import SQLiteDependencies.SQLiteBaseListener;
 import SQLiteDependencies.SQLiteLexer;
 import SQLiteDependencies.SQLiteParser;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,15 +39,10 @@ public class Tela extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         new File("databases").mkdir();
-        
+
         listener = new SQLiteBaseListener();
-        Database database = new Database("bancasso");
-        listener.setDatabase(database);
-        try {
-            database.loadTables();
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        povoaCombobox();
+
     }
 
     /**
@@ -61,8 +58,6 @@ public class Tela extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jCbDataBase = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
-        jTfDiretórioDb = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTdNomeDataBase = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -105,17 +100,8 @@ public class Tela extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCbDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
-
-        jTfDiretórioDb.setToolTipText("");
-        jTfDiretórioDb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTfDiretórioDbActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Diretório");
 
         jLabel3.setText("Nome ");
 
@@ -130,26 +116,19 @@ public class Tela extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addGap(17, 17, 17)
-                .addComponent(jTfDiretórioDb))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jTdNomeDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jTdNomeDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTfDiretórioDb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTdNomeDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jBtVai.setText("Vai!!");
@@ -346,7 +325,7 @@ public class Tela extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -364,10 +343,6 @@ public class Tela extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTfDiretórioDbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTfDiretórioDbActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTfDiretórioDbActionPerformed
-
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
         jTaQuery.setText(" ");        // TODO add your handling code here:
     }//GEN-LAST:event_jBLimparActionPerformed
@@ -382,17 +357,25 @@ public class Tela extends javax.swing.JFrame {
 
     private void jBRodarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRodarActionPerformed
 
-        CodePointCharStream inputStream = CharStreams.fromString(jTaQuery.getText());
-        SQLiteLexer lexer = new SQLiteLexer(inputStream);
-        CommonTokenStream cts = new CommonTokenStream(lexer);
-        SQLiteParser parser = new SQLiteParser(cts);
-        parser.setBuildParseTree(true);
-        ParseTree tree = parser.parse();
+        try {
+            listener.setDatabase(database);
+            database.loadTables();
+            CodePointCharStream inputStream = CharStreams.fromString(jTaQuery.getText());
+            SQLiteLexer lexer = new SQLiteLexer(inputStream);
+            CommonTokenStream cts = new CommonTokenStream(lexer);
+            SQLiteParser parser = new SQLiteParser(cts);
+            parser.setBuildParseTree(true);
+            ParseTree tree = parser.parse();
 
-        ParseTreeWalker p = new ParseTreeWalker();
-        p.walk(listener, tree);
+            ParseTreeWalker p = new ParseTreeWalker();
+            p.walk(listener, tree);
 
-        System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
+            System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "selecione ou crie um diretório");
+        }
 
 
     }//GEN-LAST:event_jBRodarActionPerformed
@@ -416,10 +399,14 @@ public class Tela extends javax.swing.JFrame {
     private void jBtVaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVaiActionPerformed
 
         if (cxCriar.isSelected()) {
-            listener.setDatabase(new Database(jTdNomeDataBase.getText()));
-            jTaOuput.setText(listener.getDatabase().toString());
+            this.database = new Database(jTdNomeDataBase.getText());
+            listener.setDatabase(this.database);
+            jTaOuput.setText("Database "+listener.getDatabase().getName()+" foi criada");
+            povoaCombobox();
         } else if (cxSelecionar.isSelected()) {
-            jTaOuput.setText("Falta implementar ainda");
+            this.database = new Database((String) jCbDataBase.getSelectedItem());
+            listener.setDatabase(this.database);
+            jTaOuput.setText((String) jCbDataBase.getSelectedItem());
         }
 
     }//GEN-LAST:event_jBtVaiActionPerformed
@@ -438,6 +425,27 @@ public class Tela extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void povoaCombobox() {
+        jCbDataBase.removeAllItems();
+
+        File dir = new File("databases");
+
+        if (dir.exists()) {
+
+            File[] files = dir.listFiles();
+
+            if (files.length > 0) {
+                for (int i = 0; i < files.length; i++) {
+                    jCbDataBase.addItem(files[i].getName());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Database vazio");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Diretorio nao existe!");
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -450,6 +458,7 @@ public class Tela extends javax.swing.JFrame {
         });
     }
     public SQLiteBaseListener listener;
+    Database database;
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -465,7 +474,6 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -478,7 +486,6 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JTextArea jTaOuput;
     private javax.swing.JTextArea jTaQuery;
     private javax.swing.JTextField jTdNomeDataBase;
-    private javax.swing.JTextField jTfDiretórioDb;
     private javax.swing.JTextField jTfXML;
     // End of variables declaration//GEN-END:variables
 }

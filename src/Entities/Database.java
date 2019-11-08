@@ -23,7 +23,7 @@ public class Database {
     }
 
     public void loadTables() throws FileNotFoundException, IOException, ClassNotFoundException {
-        System.out.println(this.rootPath + this.name);
+        System.out.println("loadtables "+this.rootPath +"+"+ this.name);
         for (final File file : this.instance.listFiles()) {
             if (!file.isDirectory()) {
                 String extension = "";
