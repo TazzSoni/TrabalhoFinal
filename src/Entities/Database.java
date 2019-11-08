@@ -72,11 +72,9 @@ public class Database {
 
     public void addMetadata(Metadata metadata) {
         this.tablesMeta.add(metadata);
-        System.out.println("adicionando a meta: " + this.tablesMeta);
     }
 
     private int findMetadataIndex(String tableName) {
-        System.out.println("iterando meta: " + this.tablesMeta);
         for (Metadata metadata : this.tablesMeta) {
             if (metadata.getTableName().equals(tableName)) {
                 return this.tablesMeta.indexOf(metadata);

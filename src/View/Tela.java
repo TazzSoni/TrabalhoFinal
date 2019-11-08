@@ -36,7 +36,8 @@ public class Tela extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         listener = new SQLiteBaseListener();
-        Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
+        Database database = new Database("", "bancasso");
+        listener.setDatabase(database);
         try {
             database.loadTables();
         } catch (IOException | ClassNotFoundException ex) {
@@ -412,7 +413,7 @@ public class Tela extends javax.swing.JFrame {
     private void jBtVaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVaiActionPerformed
 
         if (cxCriar.isSelected()) {
-            listener.setDataBase(new Database(jTfDiretórioDb.getText(), jTdNomeDataBase.getText()));
+            listener.setDatabase(new Database(jTfDiretórioDb.getText(), jTdNomeDataBase.getText()));
             jTaOuput.setText(listener.getDataBase().toString());
         } else if (cxSelecionar.isSelected()) {
             jTaOuput.setText("Falta implementar ainda");

@@ -39,7 +39,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
+    private Database database;
     ArrayList<String> ret ;
     String local = "";
 
@@ -55,7 +55,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         return this.database;
     }
 
-    public void setDataBase(Database database) {
+    public void setDatabase(Database database) {
         this.database = database;
     }
 

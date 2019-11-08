@@ -21,7 +21,6 @@ public class Metadata implements Serializable {
         for (int i : this.byteSize) {
             this.recordSize += i;
         }
-        System.out.println(this.toString()); 
     }
 
     public String getTableName() {
