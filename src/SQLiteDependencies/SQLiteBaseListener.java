@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,15 +27,21 @@ import javax.xml.validation.Validator;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
+
 import org.xml.sax.SAXException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
     private Database database = new Database("", "bancasso");
+    ArrayList<String> ret ;
+    String local = "";
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -74,6 +81,7 @@ public class SQLiteBaseListener implements SQLiteListener {
     }
 
     public void insertXML(String nomeArquivo) throws ParserConfigurationException, SAXException, IOException {
+        ret = new ArrayList<String>();
         this.currentCommand = new Insert();
         Insert command = (Insert) this.currentCommand;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -83,16 +91,43 @@ public class SQLiteBaseListener implements SQLiteListener {
         DocumentBuilder db = dbf.newDocumentBuilder();
 
         Document doc = db.parse(new File(nomeArquivo + ".xml"));
+        Element root = doc.getDocumentElement();
+        System.out.println(root.getNodeName());
+
+        printFilhos(root.getChildNodes());
+        
 
         NamedNodeMap atrib = doc.getElementsByTagName("table").item(0).getAttributes();
         command.setTableName(atrib.getNamedItem("name").getNodeValue());
-        command.addColumn(doc.getElementsByTagName("name").item(0).getTextContent());
-        command.addValue(doc.getElementsByTagName("value").item(0).getTextContent());
+        for (int i = 0; i < ret.size(); i++ ){
+            if (i % 2 == 0){
+                command.addColumn(ret.get(i));
+            }else{
+                command.addValue(ret.get(i));
+            }
+        }
+        //command.addColumn(doc.getElementsByTagName("name").item(0).getTextContent());
+        //command.addValue(doc.getElementsByTagName("value").item(0).getTextContent());
         //print apenas para ver se está carregando
         System.out.println("método no listener" + command.toString());
-
+        ret = null;
 
         command.run(this.database);
+    }
+
+    private ArrayList<String> printFilhos(NodeList filhos) {
+
+        for (int i = 0; i < filhos.getLength(); i++) {
+            Node filho = filhos.item(i);
+            if (filho.getChildNodes().getLength() > 0) {
+                printFilhos(filho.getChildNodes());
+            } else {
+                if (filho.getNodeValue().trim().length() > 0) {
+                    ret.add(filho.getNodeValue());
+                }
+            }
+        }
+        return ret;
     }
 
     public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {

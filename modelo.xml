@@ -4,11 +4,11 @@
     <table name="essa">
       <column>
           <name>col1</name>
-          <value>979</value>
+          <value>456</value>
       </column>
       <column>
           <name>col2</name>
-          <value>'opaaaa'</value>
+          <value>'cruiz'</value>
       </column>
     </table>
   </db>
