@@ -13,11 +13,10 @@ public class Database {
     private ArrayList<Metadata> tablesMeta = new ArrayList<Metadata>();
     private File instance;
     private String name;
-    private String rootPath;
+    private String rootPath = "databases";
 
-    public Database(String rootPath, String name) {
+    public Database(String name) {
         this.name = name;
-        this.rootPath = rootPath;
         File directory = new File(this.rootPath + this.name);
         directory.mkdir();
         this.instance = directory;

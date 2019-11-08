@@ -51,7 +51,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         return tableName;
     }
 
-    public Database getDataBase() {
+    public Database getDatabase() {
         return this.database;
     }
 

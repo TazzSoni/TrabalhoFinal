@@ -36,7 +36,7 @@ public class Tela extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         listener = new SQLiteBaseListener();
-        Database database = new Database("", "bancasso");
+        Database database = new Database("bancasso");
         listener.setDatabase(database);
         try {
             database.loadTables();
@@ -45,7 +45,6 @@ public class Tela extends javax.swing.JFrame {
         }
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -413,8 +412,8 @@ public class Tela extends javax.swing.JFrame {
     private void jBtVaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVaiActionPerformed
 
         if (cxCriar.isSelected()) {
-            listener.setDatabase(new Database(jTfDiretórioDb.getText(), jTdNomeDataBase.getText()));
-            jTaOuput.setText(listener.getDataBase().toString());
+            listener.setDatabase(new Database(jTdNomeDataBase.getText()));
+            jTaOuput.setText(listener.getDatabase().toString());
         } else if (cxSelecionar.isSelected()) {
             jTaOuput.setText("Falta implementar ainda");
         }
@@ -422,17 +421,16 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtVaiActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(listener.validarXML(jTfXML.getText())){
-            
+        if (listener.validarXML(jTfXML.getText())) {
 
-        try {
-            listener.insertXML(jTfXML.getText());
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JOptionPane.showMessageDialog(null, "Arquivo carregado com Sucesso");
-        }else{
-        JOptionPane.showMessageDialog(null, "Arquivo Não carregado");
+            try {
+                listener.insertXML(jTfXML.getText());
+            } catch (ParserConfigurationException | SAXException | IOException ex) {
+                Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "Arquivo carregado com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Arquivo Não carregado");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
