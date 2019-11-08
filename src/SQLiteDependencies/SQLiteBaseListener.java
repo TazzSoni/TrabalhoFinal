@@ -39,7 +39,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
     private String tableName;
     private Command currentCommand;
-    private Database database = new Database("", "bancasso");
+    private Database database = new Database("bancasso");
     ArrayList<String> ret ;
 
     public Command getCurrentCommand() {
