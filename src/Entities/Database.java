@@ -1,6 +1,10 @@
 package Entities;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class Database {
@@ -17,6 +21,33 @@ public class Database {
         File directory = new File(this.rootPath + this.name);
         directory.mkdir();
         this.instance = directory;
+    }
+
+    public void loadTables() throws FileNotFoundException, IOException, ClassNotFoundException {
+        for (final File file : new File(this.rootPath + this.name).listFiles()) {
+            if (!file.isDirectory()) {
+                String extension = "";
+
+                int i = file.getPath().lastIndexOf('.');
+                if (i > 0) {
+                    extension = file.getPath().substring(i + 1);
+                }
+                if (extension.equals("meta")) {
+
+                    FileInputStream fis = new FileInputStream(file);
+
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    Metadata metadata = (Metadata) ois.readObject();
+                    
+                    this.addMetadata(metadata);
+                    ois.close();
+                    fis.close();
+
+                } else if (extension.equals("dat")) {
+                    this.addTable(file);
+                }
+            }
+        }
     }
 
     public File getInstance() {
@@ -39,7 +70,13 @@ public class Database {
         this.tables.add(file);
     }
 
+    public void addMetadata(Metadata metadata) {
+        this.tablesMeta.add(metadata);
+        System.out.println("adicionando a meta: " + this.tablesMeta);
+    }
+
     private int findMetadataIndex(String tableName) {
+        System.out.println("iterando meta: " + this.tablesMeta);
         for (Metadata metadata : this.tablesMeta) {
             if (metadata.getTableName().equals(tableName)) {
                 return this.tablesMeta.indexOf(metadata);
@@ -54,10 +91,6 @@ public class Database {
 
     public File findTable(String tableName) {
         return this.tables.get(this.findMetadataIndex(tableName));
-    }
-
-    public void addMetadata(Metadata metadata) {
-        this.tablesMeta.add(metadata);
     }
 
     public ArrayList<Metadata> getTablesMeta() {

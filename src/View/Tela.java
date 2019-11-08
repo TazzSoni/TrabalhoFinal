@@ -27,10 +27,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author tasso
- */
 public class Tela extends javax.swing.JFrame {
 
     /**
@@ -40,8 +36,15 @@ public class Tela extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         listener = new SQLiteBaseListener();
+        Database database = new Database("C:\\Users\\Lucas Dolsan\\Desktop\\", "bancasso");
+        try {
+            database.loadTables();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -331,11 +334,7 @@ public class Tela extends javax.swing.JFrame {
 
         try {
             listener.insertXML(jTfXML.getText());
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(null, "Arquivo carregado com Sucesso");

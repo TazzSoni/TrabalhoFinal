@@ -50,6 +50,7 @@ public class Insert extends Command {
                 // portanto:
                 // char(8) -> [ , , l,u,c,a,s]
                 // cada: char = 2 bytes
+
                 if (metadata.getTypes().get(index).contains("char")) {
                     int maxLength = metadata.getByteSize()[index];
                     // corta a String no tamanho máximo necessário
