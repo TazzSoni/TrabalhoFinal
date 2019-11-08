@@ -11,19 +11,20 @@ public class Database {
 
     private ArrayList<File> tables = new ArrayList<File>();
     private ArrayList<Metadata> tablesMeta = new ArrayList<Metadata>();
-    private File instance;
-    private String name;
     private String rootPath = "databases\\";
+    private String name;
+    private File instance = new File(this.rootPath + this.name);
 
     public Database(String name) {
-        this.name = name;
+        this.name = name + "\\";
         File directory = new File(this.rootPath + this.name);
         directory.mkdir();
         this.instance = directory;
     }
 
     public void loadTables() throws FileNotFoundException, IOException, ClassNotFoundException {
-        for (final File file : new File(this.rootPath + this.name).listFiles()) {
+        System.out.println(this.rootPath + this.name);
+        for (final File file : this.instance.listFiles()) {
             if (!file.isDirectory()) {
                 String extension = "";
 
@@ -37,7 +38,7 @@ public class Database {
 
                     ObjectInputStream ois = new ObjectInputStream(fis);
                     Metadata metadata = (Metadata) ois.readObject();
-                    
+
                     this.addMetadata(metadata);
                     ois.close();
                     fis.close();

@@ -35,6 +35,9 @@ public class Tela extends javax.swing.JFrame {
     public Tela() {
         initComponents();
         setLocationRelativeTo(null);
+
+        new File("databases").mkdir();
+        
         listener = new SQLiteBaseListener();
         Database database = new Database("bancasso");
         listener.setDatabase(database);
