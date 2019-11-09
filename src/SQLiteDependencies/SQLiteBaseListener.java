@@ -40,7 +40,7 @@ public class SQLiteBaseListener implements SQLiteListener {
     private String tableName;
     private Command currentCommand;
     private Database database;
-    ArrayList<String> ret ;
+    ArrayList<String> ret;
 
     public Command getCurrentCommand() {
         return this.currentCommand;
@@ -94,14 +94,13 @@ public class SQLiteBaseListener implements SQLiteListener {
         System.out.println(root.getNodeName());
 
         iteraXML(root.getChildNodes());
-        
 
         NamedNodeMap atrib = doc.getElementsByTagName("table").item(0).getAttributes();
         command.setTableName(atrib.getNamedItem("name").getNodeValue());
-        for (int i = 0; i < ret.size(); i++ ){
-            if (i % 2 == 0){
+        for (int i = 0; i < ret.size(); i++) {
+            if (i % 2 == 0) {
                 command.addColumn(ret.get(i));
-            }else{
+            } else {
                 command.addValue(ret.get(i));
             }
         }
@@ -127,33 +126,6 @@ public class SQLiteBaseListener implements SQLiteListener {
             }
         }
         return ret;
-    }
-
-    public void readData() throws IOException, FileNotFoundException, ClassNotFoundException {
-        if (this.currentCommand instanceof CreateTable) {
-            CreateTable command = (CreateTable) this.currentCommand;
-
-            File table = this.database.getTables().get(0);
-
-            DataInputStream in = new DataInputStream(new FileInputStream(table.getAbsoluteFile()));
-
-            command.getColumns().forEach((column) -> {
-                try {
-                    System.out.println(in.readUTF());
-                } catch (IOException ex) {
-                    Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            in.close();
-
-        } else if (this.currentCommand instanceof Insert) {
-            Insert command = (Insert) this.currentCommand;
-
-        } else if (this.currentCommand instanceof Select) {
-            Select command = (Select) this.currentCommand;
-
-        }
-
     }
 
     /**
@@ -363,6 +335,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterCompound_select_stmt(SQLiteParser.Compound_select_stmtContext ctx) {
+        System.out.println("enterCompound_select_stmt" + ctx);
     }
 
     /**
@@ -374,6 +347,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitCompound_select_stmt(SQLiteParser.Compound_select_stmtContext ctx) {
+        System.out.println("exitCompound_select_stmt" + ctx);
     }
 
     /**
@@ -656,6 +630,9 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterFactored_select_stmt(SQLiteParser.Factored_select_stmtContext ctx) {
+        this.currentCommand = new Select();
+        System.out.println("enterFactored_select_stmt");
+
     }
 
     /**
@@ -667,6 +644,10 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitFactored_select_stmt(SQLiteParser.Factored_select_stmtContext ctx) {
+       Select command = (Select) this.currentCommand;
+        command.run(this.database);
+        System.out.println("exitFactored_select_stmt");
+
     }
 
     /**
@@ -813,6 +794,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSimple_select_stmt(SQLiteParser.Simple_select_stmtContext ctx) {
+        System.out.println("enterSimple_select_stmt" + ctx);
     }
 
     /**
@@ -824,6 +806,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSimple_select_stmt(SQLiteParser.Simple_select_stmtContext ctx) {
+        System.out.println("exitSimple_select_stmt" + ctx);
     }
 
     /**
@@ -835,6 +818,8 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSelect_stmt(SQLiteParser.Select_stmtContext ctx) {
+        System.out.println("enterSelect_stmt" + ctx);
+        this.currentCommand = new Select();
     }
 
     /**
@@ -846,6 +831,9 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSelect_stmt(SQLiteParser.Select_stmtContext ctx) {
+        System.out.println("exitSelect_stmt" + ctx);
+        Select command = (Select) this.currentCommand;
+        command.run(this.database);
     }
 
     /**
@@ -857,6 +845,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSelect_or_values(SQLiteParser.Select_or_valuesContext ctx) {
+        System.out.println("enterSelect_or_values " + ctx);
     }
 
     /**
@@ -868,6 +857,8 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSelect_or_values(SQLiteParser.Select_or_valuesContext ctx) {
+        System.out.println("exitSelect_or_values" + ctx);
+
     }
 
     /**
@@ -1365,7 +1356,9 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSelect_core(SQLiteParser.Select_coreContext ctx) {
-        System.out.println("Comando select");
+        System.out.println("enterSelect_core" + ctx);
+        
+
     }
 
     /**
@@ -1377,6 +1370,9 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSelect_core(SQLiteParser.Select_coreContext ctx) {
+        
+        System.out.println("exitSelect_core" + ctx);
+
     }
 
     /**
@@ -1454,8 +1450,14 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterLiteral_value(SQLiteParser.Literal_valueContext ctx) {
-        Insert command = (Insert) this.currentCommand;
-        command.addValue(ctx.getText());
+        if (this.currentCommand instanceof Insert) {
+            Insert command = (Insert) this.currentCommand;
+            command.addValue(ctx.getText());
+        } else if (this.currentCommand instanceof Select) {
+            Select command = (Select) this.currentCommand;
+            command.addValue(ctx.getText());
+
+        }
         //command.gravarEmBanco();
 
     }
@@ -1667,6 +1669,7 @@ public class SQLiteBaseListener implements SQLiteListener {
 
         } else if (this.currentCommand instanceof Select) {
             Select command = (Select) this.currentCommand;
+            command.setFrom(ctx.getText());
 
         }
 
@@ -1745,6 +1748,7 @@ public class SQLiteBaseListener implements SQLiteListener {
             command.addColumn(ctx.getText());
 
         } else if (this.currentCommand instanceof Select) {
+            System.out.println("adicionou coluna 1750"+ctx.getText());
             Select command = (Select) this.currentCommand;
             command.addColumn(ctx.getText());
         }

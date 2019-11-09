@@ -14,12 +14,15 @@ import Entities.Database;
 import SQLiteDependencies.SQLiteBaseListener;
 import SQLiteDependencies.SQLiteLexer;
 import SQLiteDependencies.SQLiteParser;
+import java.awt.Color;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import org.antlr.v4.runtime.CharStreams;
@@ -42,6 +45,7 @@ public class Tela extends javax.swing.JFrame {
 
         listener = new SQLiteBaseListener();
         povoaCombobox();
+        
 
     }
 
@@ -62,6 +66,8 @@ public class Tela extends javax.swing.JFrame {
         jTdNomeDataBase = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jBtVai = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLbDatabaseUso = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -100,7 +106,7 @@ public class Tela extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCbDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel3.setText("Nome ");
@@ -138,20 +144,35 @@ public class Tela extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Database em uso:");
+
+        jLbDatabaseUso.setText("Nenhuma Database em uso");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(396, 396, 396)
-                .addComponent(jBtVai)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(320, 320, 320)
+                        .addComponent(jBtVai))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLbDatabaseUso, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jBtVai)
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLbDatabaseUso, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
 
         jLabel1.setText("Query Editor ");
@@ -305,11 +326,11 @@ public class Tela extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(121, 121, 121)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,12 +346,12 @@ public class Tela extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(45, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -374,21 +395,14 @@ public class Tela extends javax.swing.JFrame {
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(null, "selecione ou crie um diretório");
+            JOptionPane.showMessageDialog(null, "ERRO!! \nSelecione ou crie um Database");
         }
 
 
     }//GEN-LAST:event_jBRodarActionPerformed
 
     private void jBLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLerActionPerformed
-        try {
-            listener.readData();
 
-        } catch (IOException ex) {
-            System.out.println("Não Leu" + ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
     }//GEN-LAST:event_jBLerActionPerformed
 
@@ -401,15 +415,35 @@ public class Tela extends javax.swing.JFrame {
         if (cxCriar.isSelected()) {
             this.database = new Database(jTdNomeDataBase.getText());
             listener.setDatabase(this.database);
-            jTaOuput.setText("Database "+listener.getDatabase().getName()+" foi criada");
+            String nomeDb = listener.getDatabase().getName();
+            if (!nomeDb.isEmpty()) {
+                nomeDb = nomeDb.substring(0, nomeDb.length() - 1);
+            }
+            jLbDatabaseUso.setText(nomeDb);
+            trocaCorLabel(jLbDatabaseUso);
+
+            jTaOuput.setText("Database " + nomeDb + " foi criada");
             povoaCombobox();
         } else if (cxSelecionar.isSelected()) {
             this.database = new Database((String) jCbDataBase.getSelectedItem());
             listener.setDatabase(this.database);
-            jTaOuput.setText((String) jCbDataBase.getSelectedItem());
+            String nomeDb = listener.getDatabase().getName();
+            if (!nomeDb.isEmpty()) {
+                nomeDb = nomeDb.substring(0, nomeDb.length() - 1);
+            }
+            jLbDatabaseUso.setText(nomeDb);
+            trocaCorLabel(jLbDatabaseUso);
+            jTaOuput.setText("Database " +(String) jCbDataBase.getSelectedItem()+ " selecionada");
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhuma opção selecionada!!");
         }
 
     }//GEN-LAST:event_jBtVaiActionPerformed
+
+    private void trocaCorLabel(JLabel label) {
+        label.setFont(new Font("TimesRoman",Font.ITALIC,18));
+        label.setForeground(Color.BLUE);
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (listener.validarXML(jTfXML.getText())) {
@@ -453,8 +487,8 @@ public class Tela extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Tela().setVisible(true);
+        JOptionPane.showMessageDialog(null, "Selecione ou crie uma Database");
             }
-
         });
     }
     public SQLiteBaseListener listener;
@@ -474,7 +508,9 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLbDatabaseUso;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
