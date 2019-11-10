@@ -123,6 +123,26 @@ public class Select extends Command {
         } catch (IOException ex) {
             Logger.getLogger(Insert.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /*
+                int TAMREG = metadata.getRecordSize();
+                Long auxs = raf.length();
+                int aux = Integer.valueOf(auxs.toString());
+                aux = aux / TAMREG;
+		          System.out.println("aqui");
+                for (int i = 0; i< aux;i++){
+		          System.out.println("passou");
+                    
+		raf.seek(i * TAMREG);
+		byte[] reg = new byte[metadata.getByteSize()[i]];
+		raf.read(reg);
+		
+		
+		String s = new String(reg, 0, metadata.getByteSize()[i]);
+		System.out.println(s + " saiu " );
+                }
+		
+		raf.close();
+                */
 
     }
 
