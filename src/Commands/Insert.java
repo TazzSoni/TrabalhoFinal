@@ -46,12 +46,12 @@ public class Insert extends Command {
                 raf.seek(raf.length());
                 //busca o indice do valor
                 int index = this.values.indexOf(value);
-                // (considerando que é tudo char(n)) formata a string a ser escrita
-                // portanto:
-                // char(8) -> [ , , l,u,c,a,s]
-                // cada: char = 2 bytes
 
                 if (metadata.getTypes().get(index).contains("char")) {
+                    // char(8) -> [ , , l,u,c,a,s]
+
+                    // cada: char = 2 bytes
+
                     int byteSize = metadata.getByteSize()[index];
                     // corta a String no tamanho máximo necessário
                     // e se for menor, preenche o restante com espaços em branco

@@ -37,7 +37,6 @@ public class CreateTable extends Command {
         this.types.add(type);
     }
 
-    @Override
     public void run(Database database) throws Exception {
         String path = database.getPath() + tableName + ".dat";
         File table = new File(path);

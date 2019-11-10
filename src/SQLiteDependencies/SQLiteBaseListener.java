@@ -335,7 +335,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterCompound_select_stmt(SQLiteParser.Compound_select_stmtContext ctx) {
-        System.out.println("enterCompound_select_stmt" + ctx);
+        System.out.println("enterCompound_select_stmt: " + ctx.getText());
     }
 
     /**
@@ -347,7 +347,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitCompound_select_stmt(SQLiteParser.Compound_select_stmtContext ctx) {
-        System.out.println("exitCompound_select_stmt" + ctx);
+        System.out.println("exitCompound_select_stmt" + ctx.getText());
     }
 
     /**
@@ -631,7 +631,7 @@ public class SQLiteBaseListener implements SQLiteListener {
     @Override
     public void enterFactored_select_stmt(SQLiteParser.Factored_select_stmtContext ctx) {
         this.currentCommand = new Select();
-        System.out.println("enterFactored_select_stmt");
+        System.out.println("enterFactored_select_stmt: " + ctx.getText());
 
     }
 
@@ -644,9 +644,9 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitFactored_select_stmt(SQLiteParser.Factored_select_stmtContext ctx) {
-       Select command = (Select) this.currentCommand;
+        Select command = (Select) this.currentCommand;
+        command.setContainsAsterisk(ctx.getText().contains("*"));
         command.run(this.database);
-        System.out.println("exitFactored_select_stmt");
 
     }
 
@@ -794,7 +794,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSimple_select_stmt(SQLiteParser.Simple_select_stmtContext ctx) {
-        System.out.println("enterSimple_select_stmt" + ctx);
+        System.out.println("enterSimple_select_stmt: " + ctx.getText());
     }
 
     /**
@@ -806,7 +806,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSimple_select_stmt(SQLiteParser.Simple_select_stmtContext ctx) {
-        System.out.println("exitSimple_select_stmt" + ctx);
+        System.out.println("exitSimple_select_stmt: " + ctx.getText());
     }
 
     /**
@@ -818,7 +818,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSelect_stmt(SQLiteParser.Select_stmtContext ctx) {
-        System.out.println("enterSelect_stmt" + ctx);
+        System.out.println("enterSelect_stmt: " + ctx.getText());
         this.currentCommand = new Select();
     }
 
@@ -831,7 +831,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSelect_stmt(SQLiteParser.Select_stmtContext ctx) {
-        System.out.println("exitSelect_stmt" + ctx);
+        System.out.println("exitSelect_stmt: " + ctx.getText());
         Select command = (Select) this.currentCommand;
         command.run(this.database);
     }
@@ -845,7 +845,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSelect_or_values(SQLiteParser.Select_or_valuesContext ctx) {
-        System.out.println("enterSelect_or_values " + ctx);
+        System.out.println("enterSelect_or_values : " + ctx.getText());
     }
 
     /**
@@ -857,7 +857,7 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSelect_or_values(SQLiteParser.Select_or_valuesContext ctx) {
-        System.out.println("exitSelect_or_values" + ctx);
+        System.out.println("exitSelect_or_values: " + ctx.getText());
 
     }
 
@@ -1356,8 +1356,8 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void enterSelect_core(SQLiteParser.Select_coreContext ctx) {
-        System.out.println("enterSelect_core" + ctx);
-        
+
+        System.out.println("enterSelect_core" + ctx.getText());
 
     }
 
@@ -1370,8 +1370,8 @@ public class SQLiteBaseListener implements SQLiteListener {
      */
     @Override
     public void exitSelect_core(SQLiteParser.Select_coreContext ctx) {
-        
-        System.out.println("exitSelect_core" + ctx);
+
+        System.out.println("exitSelect_core: " + ctx.getText());
 
     }
 
@@ -1748,7 +1748,7 @@ public class SQLiteBaseListener implements SQLiteListener {
             command.addColumn(ctx.getText());
 
         } else if (this.currentCommand instanceof Select) {
-            System.out.println("adicionou coluna 1750"+ctx.getText());
+            System.out.println("adicionou coluna 1750" + ctx.getText());
             Select command = (Select) this.currentCommand;
             command.addColumn(ctx.getText());
         }

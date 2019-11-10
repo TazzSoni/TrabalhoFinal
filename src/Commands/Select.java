@@ -16,6 +16,7 @@ public class Select extends Command {
     private ArrayList<String> values = new ArrayList<String>();
     private String from;
     private String where;
+    private boolean containsAsterisk;
 
     //criei uma lógica para não adicionar a mesma coluna duas vezes, pq no where ele 
     //chama novamente o método enterColumn_name no listener e adiciona denovo a mesma 
@@ -25,8 +26,6 @@ public class Select extends Command {
         this.columns.add(column);
         }else if (this.columns.get(this.columns.size()-1).equals(column)){
             
-        }else{
-            this.columns.add(column);
         }
     }
 
@@ -46,6 +45,23 @@ public class Select extends Command {
         return from;
     }
 
+    public ArrayList<String> getValues() {
+        return values;
+    }
+
+    public void setValues(ArrayList<String> values) {
+        this.values = values;
+    }
+
+    public boolean isContainsAsterisk() {
+        return containsAsterisk;
+    }
+
+    public void setContainsAsterisk(boolean containsAsterisk) {
+        this.containsAsterisk = containsAsterisk;
+    }
+    
+
     public void setFrom(String from) {
         this.from = from;
     }
@@ -57,18 +73,23 @@ public class Select extends Command {
     public void setWhere(String where) {
         this.where = where;
     }
-
     @Override
     public void run(Database database) {
         Metadata metadata = database.findMetadata(this.from);
         File table = database.findTable(this.from);
         try {
             RandomAccessFile raf = new RandomAccessFile(table, "r");
+            
+            if(this.containsAsterisk){
+            
+            }
+            
+            
             //roda o comando Insert com RandomAccessFile
             for (String value : this.values) {
                 //para cara valor no insert, faça:
                 //coloca o pointer no final do arquivo
-                System.out.println("aqui"+value);
+                System.out.println("aqui: "+value);
 
                 /* raf.seek(raf.length());
                 //busca o indice do valor
@@ -113,5 +134,4 @@ public class Select extends Command {
             return "Select{" +getColumns().toString()+ " from=" + from + ", where=" + where + '}';
         }
     }
-    
 }
