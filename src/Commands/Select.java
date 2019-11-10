@@ -22,10 +22,10 @@ public class Select extends Command {
     //chama novamente o método enterColumn_name no listener e adiciona denovo a mesma 
     public void addColumn(String column) {
         int aux = columns.size();
-        if (columns.size() ==0){
-        this.columns.add(column);
-        }else if (this.columns.get(this.columns.size()-1).equals(column)){
-            
+        if (columns.size() == 0) {
+            this.columns.add(column);
+        } else if (this.columns.get(this.columns.size() - 1).equals(column)) {
+
         }
     }
 
@@ -60,7 +60,6 @@ public class Select extends Command {
     public void setContainsAsterisk(boolean containsAsterisk) {
         this.containsAsterisk = containsAsterisk;
     }
-    
 
     public void setFrom(String from) {
         this.from = from;
@@ -73,23 +72,58 @@ public class Select extends Command {
     public void setWhere(String where) {
         this.where = where;
     }
+
     @Override
     public void run(Database database) {
         Metadata metadata = database.findMetadata(this.from);
         File table = database.findTable(this.from);
         try {
             RandomAccessFile raf = new RandomAccessFile(table, "r");
-            
-            if(this.containsAsterisk){
-            
+
+            if (this.containsAsterisk) {
+                Long tableLengthLong = raf.length();
+                int tableLength = Integer.valueOf(tableLengthLong.toString());
+
+                int recordCount = (tableLength + 1) / metadata.getRecordSize();
+
+                System.out.println(metadata.toString());
+
+                for (int i = 0; i < recordCount; i++) {
+                    // move o pointeiro no arquivo, de registro em registro
+                    raf.seek(i * metadata.getRecordSize());
+
+                    //itera de coluna em coluna
+                    for (int j = 0; j < metadata.getColumns().size(); j++) {
+                        // atributos das colunas
+                        String column = metadata.getColumns().get(j);
+                        System.out.println("coluna: " + column);
+                        String type = metadata.getTypes().get(j);
+                        System.out.println("tipo: " + type);
+                        int byteSize = metadata.getByteSize()[j];
+                        System.out.println("tamanho bytes: " + byteSize);
+
+                        if (type.contains("char")) {
+                            String text  = "";
+                            for (int c = 0; c < 2; c++) {
+                                text += raf.readChar();
+                            }
+                            System.out.println("text: " + text);
+                        }
+
+                        byte[] value = new byte[byteSize];
+                        raf.read(value);
+
+                        System.out.println("OUTPUT: " + new String(value, 0, byteSize));
+                    }
+                }
+                raf.close();
             }
-            
-            
+
             //roda o comando Insert com RandomAccessFile
             for (String value : this.values) {
                 //para cara valor no insert, faça:
                 //coloca o pointer no final do arquivo
-                System.out.println("aqui: "+value);
+                System.out.println("aqui: " + value);
 
                 /* raf.seek(raf.length());
                 //busca o indice do valor
@@ -123,35 +157,14 @@ public class Select extends Command {
         } catch (IOException ex) {
             Logger.getLogger(Insert.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /*
-                int TAMREG = metadata.getRecordSize();
-                Long auxs = raf.length();
-                int aux = Integer.valueOf(auxs.toString());
-                aux = aux / TAMREG;
-		          System.out.println("aqui");
-                for (int i = 0; i< aux;i++){
-		          System.out.println("passou");
-                    
-		raf.seek(i * TAMREG);
-		byte[] reg = new byte[metadata.getByteSize()[i]];
-		raf.read(reg);
-		
-		
-		String s = new String(reg, 0, metadata.getByteSize()[i]);
-		System.out.println(s + " saiu " );
-                }
-		
-		raf.close();
-                */
-
     }
 
     @Override
     public String toString() {
-        if (columns.size() == 0){
-        return "Select{" + " from=" + from + ", where=" + where + '}';
-    }else{
-            return "Select{" +getColumns().toString()+ " from=" + from + ", where=" + where + '}';
+        if (columns.size() == 0) {
+            return "Select{" + " from=" + from + ", where=" + where + '}';
+        } else {
+            return "Select{" + getColumns().toString() + " from=" + from + ", where=" + where + '}';
         }
     }
 }
