@@ -2,6 +2,7 @@ package Entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Metadata implements Serializable {
 
@@ -65,7 +66,7 @@ public class Metadata implements Serializable {
 
     @Override
     public String toString() {
-        return "Metadata{" + "tableName=" + tableName + ", recordSize=" + recordSize + ", columns=" + columns + ", types=" + types + ", byteSize=" + byteSize + '}';
+        return "Metadata{" + "tableName=" + tableName + ", recordSize=" + recordSize + ", columns=" + columns + ", types=" + types + ", byteSize=" + Arrays.toString(byteSize) + '}';
     }
 
 }

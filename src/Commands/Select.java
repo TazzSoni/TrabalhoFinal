@@ -84,7 +84,7 @@ public class Select extends Command {
                 Long tableLengthLong = raf.length();
                 int tableLength = Integer.valueOf(tableLengthLong.toString());
 
-                int recordCount = (tableLength + 1) / metadata.getRecordSize();
+                int recordCount = tableLength / metadata.getRecordSize();
 
                 System.out.println(metadata.toString());
 
@@ -96,21 +96,11 @@ public class Select extends Command {
                     for (int j = 0; j < metadata.getColumns().size(); j++) {
                         // atributos das colunas
                         String column = metadata.getColumns().get(j);
-                        System.out.println("coluna: " + column);
                         String type = metadata.getTypes().get(j);
-                        System.out.println("tipo: " + type);
                         int byteSize = metadata.getByteSize()[j];
-                        System.out.println("tamanho bytes: " + byteSize);
-
-                        if (type.contains("char")) {
-                            String text  = "";
-                            for (int c = 0; c < 2; c++) {
-                                text += raf.readChar();
-                            }
-                            System.out.println("text: " + text);
-                        }
 
                         byte[] value = new byte[byteSize];
+                        
                         raf.read(value);
 
                         System.out.println("OUTPUT: " + new String(value, 0, byteSize));

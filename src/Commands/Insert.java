@@ -49,22 +49,23 @@ public class Insert extends Command {
 
                 if (metadata.getTypes().get(index).contains("char")) {
                     // char(8) -> [ , , l,u,c,a,s]
-
+                    
                     // cada: char = 2 bytes
 
                     int byteSize = metadata.getByteSize()[index];
                     // corta a String no tamanho máximo necessário
                     // e se for menor, preenche o restante com espaços em branco
 
-                    if (value.length() > byteSize / 2) {
-                        value = value.substring(0, byteSize / 2);
-                    }
+                    //if (value.length() > byteSize / 2) {
+                      //  value = value.substring(0, byteSize / 2);
+                    //}
                     // remove as aspas informadas no insert
+                    
                     if (value.contains("'")) {
                         value = value.substring(1, value.length() - 1);
                     }
 
-                    raf.writeChars(String.format("%1$" + byteSize / 2 + "s", value));
+                    raf.writeChars(String.format("%1$" + (byteSize / 2) + "s", value));
 
                 } else if (metadata.getTypes().get(index).contains("int")) {
                     raf.writeInt(Integer.parseInt(value));
