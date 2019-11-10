@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,48 +102,20 @@ public class Select extends Command {
                         int byteSize = metadata.getByteSize()[j];
 
                         byte[] value = new byte[byteSize];
-                        
-                        raf.read(value);
 
-                        System.out.println("OUTPUT: " + new String(value, 0, byteSize));
+                        raf.read(value);
+                        if (type.contains("char")) {
+                            this.values.add(new String(value, 0, byteSize));
+                        } else if(type.contains("int")){
+                            this.values.add(ByteBuffer.wrap(value).getInt() + "");
+                        }
                     }
                 }
+                System.out.println("columns: " + metadata.getColumns().toString());
+                System.out.println("values: " + this.values.toString());
                 raf.close();
             }
 
-            //roda o comando Insert com RandomAccessFile
-            for (String value : this.values) {
-                //para cara valor no insert, faça:
-                //coloca o pointer no final do arquivo
-                System.out.println("aqui: " + value);
-
-                /* raf.seek(raf.length());
-                //busca o indice do valor
-                int index = this.values.indexOf(value);
-                // (considerando que é tudo char(n)) formata a string a ser escrita
-                // portanto:
-                // char(8) -> [ , , l,u,c,a,s]
-                // cada: char = 2 bytes
-                if (metadata.getTypes().get(index).contains("char")) {
-                    int byteSize = metadata.getByteSize()[index];
-                    // corta a String no tamanho máximo necessário
-                    // e se for menor, preenche o restante com espaços em branco
-                    if (value.length() > byteSize / 2) {
-                        value = value.substring(0, byteSize / 2);
-                    }
-                    // remove as aspas informadas no insert
-                    if (value.contains("'")) {
-                        value = value.substring(1, value.length() - 1);
-                    }
-
-                    raf.writeChars(String.format("%1$" + byteSize / 2 + "s", value));
-
-                } else if (metadata.getTypes().get(index).contains("int")) {
-                    raf.writeInt(Integer.parseInt(value));
-                }
-                System.out.println("table length: " + raf.length());
-                 */
-            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Insert.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
