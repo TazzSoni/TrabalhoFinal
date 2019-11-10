@@ -52,7 +52,7 @@ public class CreateTable extends Command {
                 byteSize[i] = Integer.parseInt(length) * 2;
             } else if (this.types.get(i).contains("int")) {
                 byteSize[i] = 4;
-            } else if (this.types.get(i).contains("boolean")) {
+            } else if (this.types.get(i).contains("f")) {
                 byteSize[i] = 4;
             }
         }
@@ -61,32 +61,6 @@ public class CreateTable extends Command {
         database.addMetadata(metadata);
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(database.getPath() + tableName + ".meta")));
         oos.writeObject(metadata);
-
-        //RandomAccessFile raf = new RandomAccessFile(file, "rw" ); 
-//        for (int i = 0; i < columns.size(); i++) {
-//            String aux = columns.get(i);
-//            out.writeUTF(aux);
-//            System.out.println(columns.get(i));
-//        }
-        /*out.writeBoolean(true);
-        out.writeByte(10); // 1 byte
-        out.writeChar('A'); // 2 bytes
-        out.writeDouble(100.36); // 8 bytes
-        out.writeFloat(100.36f); // 4 bytes
-        out.writeInt(100); // 4 bytes
-        out.writeLong(100); // 8 bytes
-        out.writeUTF("testando"); // 10 bytes
-        out.close();
-
-        // 1 byte
-        byte data[] = {1, 1, 1, 1};
-        Path file = Paths.get("C:/Users/tasso/Desktop/teste.dat");
-        try {
-            Files.write(file, data);
-
-        } catch (IOException ex) {
-            Logger.getLogger(CreateTable.class.getName()).log(Level.SEVERE, null, ex);
-        }  */
     }
 
     @Override

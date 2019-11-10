@@ -2,6 +2,8 @@ package Commands;
 
 import Entities.Database;
 import Entities.Metadata;
+import Entities.Result;
+import Entities.ResultSet;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -80,6 +82,7 @@ public class Select extends Command {
         Metadata metadata = database.findMetadata(this.from);
         File table = database.findTable(this.from);
         try {
+            ResultSet resultSet = new ResultSet();
             RandomAccessFile raf = new RandomAccessFile(table, "r");
 
             if (this.containsAsterisk) {
@@ -101,19 +104,22 @@ public class Select extends Command {
                         String type = metadata.getTypes().get(j);
                         int byteSize = metadata.getByteSize()[j];
 
-                        byte[] value = new byte[byteSize];
+                        byte[] bytesValue = new byte[byteSize];
 
-                        raf.read(value);
+                        raf.read(bytesValue);
+
+                        String value = "";
+
                         if (type.contains("char")) {
-                            this.values.add(new String(value, 0, byteSize));
-                        } else if(type.contains("int")){
-                            this.values.add(ByteBuffer.wrap(value).getInt() + "");
+                            value = new String(bytesValue, 0, byteSize);
+                        } else if (type.contains("int")) {
+                            value = ByteBuffer.wrap(bytesValue).getInt() + "";
                         }
+                        resultSet.addResult(new Result(column, value));
                     }
                 }
-                System.out.println("columns: " + metadata.getColumns().toString());
-                System.out.println("values: " + this.values.toString());
                 raf.close();
+                System.out.println("RESULTADO: " + resultSet.toString());
             }
 
         } catch (FileNotFoundException ex) {
