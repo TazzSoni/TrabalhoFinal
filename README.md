@@ -28,3 +28,4 @@ O sistema proposto para a "Devcom Projetos conterá as informacões aqui detalha
 
 4.REQUISITOS
 
+![Requisitos](https://user-images.githubusercontent.com/45270751/68616600-216a8c80-04a4-11ea-882c-56786b3a2a9b.jpg)
