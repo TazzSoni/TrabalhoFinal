@@ -3,6 +3,7 @@
 **Trabalho do Semestre**
 
 _Trabalho desenvolvido em cumprimento do objetivo de trabalho de implementação da disciplina de Persistência de Dados, UDESC, Campus CEAVI/Ibirama-SC, quarta fase._
+
 _Objetivo: Desenvolver aplicações avançadas de manipulação de arquivos usando uma linguagem real (Java)._
 
 # Sumário
