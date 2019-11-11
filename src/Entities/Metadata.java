@@ -18,7 +18,7 @@ public class Metadata implements Serializable {
         this.types = types;
         this.byteSize = byteSize;
         this.recordSize = 0;
-       
+
         for (int i : this.byteSize) {
             this.recordSize += i;
         }
@@ -26,6 +26,24 @@ public class Metadata implements Serializable {
 
     public String getTableName() {
         return tableName;
+    }
+
+    public int findColumnIndex(String columnName) {
+        for (String column : this.columns) {
+            if (column.equals(columnName)) {
+                return this.columns.indexOf(columnName);
+            }
+        }
+        return -1;
+    }
+
+    public boolean hasColumn(String columnName) {
+        int index = this.findColumnIndex(columnName);
+        if (index != -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setTableName(String tableName) {

@@ -9,6 +9,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Insert extends Command {
 
@@ -38,36 +39,54 @@ public class Insert extends Command {
         File table = database.findTable(this.tableName);
 
         try {
+
+            if (metadata.getColumns().size() != this.values.size()) {
+                ArrayList<String> fixedValues = new ArrayList<String>(metadata.getColumns().size());
+
+                for (String column : metadata.getColumns()) {
+                    fixedValues.add(null);
+                }
+
+                for (String column : this.columns) {
+                    String value = this.values.get(this.columns.indexOf(column));
+                    int columnIndex = metadata.findColumnIndex(column);
+                    fixedValues.set(columnIndex, value);
+                }
+                this.values = fixedValues;
+            }
+
             RandomAccessFile raf = new RandomAccessFile(table, "rw");
-            //roda o comando Insert com RandomAccessFile
-            for (String value : this.values) {
-                //para cara valor no insert, faça:
-                //coloca o pointer no final do arquivo
+
+            System.out.println(metadata.toString());
+
+            for (String column : metadata.getColumns()) {
                 raf.seek(raf.length());
-                //busca o indice do valor
-                int index = this.values.indexOf(value);
+                int columnIndex = metadata.findColumnIndex(column);
 
-                if (metadata.getTypes().get(index).contains("char")) {
-                    // char(8) -> [ , , l,u,c,a,s]
-                    
-                    // cada: char = 2 bytes
+                String value = this.values.get(columnIndex);
 
-                    int byteSize = metadata.getByteSize()[index];
-                    // corta a String no tamanho máximo necessário
-                    // e se for menor, preenche o restante com espaços em branco
+                if (!metadata.hasColumn(column)) {
+                    JOptionPane.showMessageDialog(null, "Coluna inexistente");
+                    break;
+                }
 
-                    //if (value.length() > byteSize / 2) {
-                      //  value = value.substring(0, byteSize / 2);
-                    //}
-                    // remove as aspas informadas no insert
-                    
+                if (value == null) {
+                    int byteSize = metadata.getByteSize()[columnIndex];
+
+                    for (int i = 0; i < byteSize / 2; i++) {
+                        raf.writeChars(" ");
+                    }
+
+                } else if (metadata.getTypes().get(columnIndex).contains("char")) {
+                    int byteSize = metadata.getByteSize()[columnIndex];
+
                     if (value.contains("'")) {
                         value = value.substring(1, value.length() - 1);
                     }
 
                     raf.writeChars(String.format("%1$" + (byteSize / 2) + "s", value));
 
-                } else if (metadata.getTypes().get(index).contains("int")) {
+                } else if (metadata.getTypes().get(columnIndex).contains("int")) {
                     raf.writeInt(Integer.parseInt(value));
                 }
                 System.out.println("table length: " + raf.length());
