@@ -27,7 +27,7 @@ public class ResultSet {
         int cont = 0;
         for (int i = 0; i < results.size() / numColumns; i++) {
             for (int j = 0; j < numColumns; j++) {
-                result += results.get(cont);
+                result += results.get(cont).toString();
                 cont++;
             }
             result += "\n";
