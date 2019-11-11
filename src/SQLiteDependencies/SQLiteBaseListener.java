@@ -109,6 +109,7 @@ public class SQLiteBaseListener implements SQLiteListener {
         //print apenas para ver se está carregando
         System.out.println("método no listener" + command.toString());
         ret = null;
+        System.out.println(this.database.toString());
 
         command.run(this.database);
     }

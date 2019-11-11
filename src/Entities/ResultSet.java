@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ResultSet {
 
     private ArrayList<Result> results = new ArrayList<Result>();
+    private int numColumns;
 
     public ResultSet() {
     }
@@ -17,8 +18,25 @@ public class ResultSet {
         this.results.add(result);
     }
 
+    public void setNumColumns(int numColumns) {
+        this.numColumns = numColumns;
+    }
+
+    public String imprimeResultado() {
+        String result = "";
+        int cont = 0;
+        for (int i = 0; i < results.size() / numColumns; i++) {
+            for (int j = 0; j < numColumns; j++) {
+                result += results.get(cont);
+                cont++;
+            }
+            result += "\n";
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
-        return "ResultSet{" + "results=" + results.toString() + '}';
+        return imprimeResultado();
     }
 }

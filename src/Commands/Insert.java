@@ -74,7 +74,7 @@ public class Insert extends Command {
                     int byteSize = metadata.getByteSize()[columnIndex];
 
                     for (int i = 0; i < byteSize / 2; i++) {
-                        raf.writeChars(" ");
+                        raf.writeChars("&");
                     }
 
                 } else if (metadata.getTypes().get(columnIndex).contains("char")) {
@@ -88,6 +88,8 @@ public class Insert extends Command {
 
                 } else if (metadata.getTypes().get(columnIndex).contains("int")) {
                     raf.writeInt(Integer.parseInt(value));
+                }else if (metadata.getTypes().get(columnIndex).contains("float")) {
+                    raf.writeFloat(Float.parseFloat(value));
                 }
                 System.out.println("table length: " + raf.length());
             }

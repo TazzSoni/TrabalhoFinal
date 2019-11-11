@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inserts>
     <db name="???">
-        <table name="teste">
+        <table name="valendo">
             <column>
-                <name>col1</name>
-                <value>cruiz</value>
+                <name>endereco</name>
+                <value>'rua ma'</value>
+            </column>
+            <column>
+                <name>idade</name>
+                <value>55</value>
+            </column>
+            <column>
+                <name>salario</name>
+                <value>2345.78</value>
             </column>
         </table>
     </db>

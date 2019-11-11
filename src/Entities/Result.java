@@ -7,11 +7,22 @@ public class Result {
 
     public Result(String column, String value) {
         this.column = column;
-        this.value = value;
+        verifValue(value);
+    }
+    public void verifValue(String value){
+        if (value.contains("&")){
+            this.value = "";
+        }else if(value.equals("3.489802E-39")){
+            this.value = "";
+        }else if(value.equals("2490406")){
+            this.value = "";
+        }else{
+            this.value = value;
+        }
     }
 
     @Override
     public String toString() {
-        return "Result{" + "column=" + column + ", value=" + value + '}';
+        return "{" + "column=" + column + ", value=" + value + '}';
     }
 }

@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -391,7 +392,7 @@ public class Tela extends javax.swing.JFrame {
             ParseTreeWalker p = new ParseTreeWalker();
             p.walk(listener, tree);
 
-            System.out.println("Rodando comando: " + listener.getCurrentCommand().toString());
+            jTaOuput.setText("Rodando comando: " + listener.getCurrentCommand().toString());
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException ex) {
@@ -449,8 +450,12 @@ public class Tela extends javax.swing.JFrame {
         if (listener.validarXML(jTfXML.getText())) {
 
             try {
+                database.loadTables();
                 listener.insertXML(jTfXML.getText());
+                jTaOuput.setText("Rodando comando: " + listener.getCurrentCommand().toString());
             } catch (ParserConfigurationException | SAXException | IOException ex) {
+                Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Arquivo carregado com sucesso");
