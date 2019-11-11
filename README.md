@@ -5,8 +5,9 @@ Objetivo: Desenvolver aplicações avançadas de manipulação de arquivos usand
 
 Sumário
 1. COMPONENTES
-Integrantes do grupo
+
 Rodrigo Souza Tassoni
+
 Lucas Dolsan
 
 2.DESCRIÇÃO DO TRABALHO
