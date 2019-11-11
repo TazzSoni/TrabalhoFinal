@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.xml.parsers.ParserConfigurationException;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
@@ -66,7 +67,7 @@ public class Tela extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTdNomeDataBase = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jBtVai = new javax.swing.JButton();
+        jBtSetDatabase = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLbDatabaseUso = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -75,7 +76,6 @@ public class Tela extends javax.swing.JFrame {
         jTaQuery = new javax.swing.JTextArea();
         jBRodar = new javax.swing.JButton();
         jBLimpar = new javax.swing.JButton();
-        jBLer = new javax.swing.JButton();
         jTfXML = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -138,10 +138,10 @@ public class Tela extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jBtVai.setText("Vai!!");
-        jBtVai.addActionListener(new java.awt.event.ActionListener() {
+        jBtSetDatabase.setText("Set Database");
+        jBtSetDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtVaiActionPerformed(evt);
+                jBtSetDatabaseActionPerformed(evt);
             }
         });
 
@@ -157,7 +157,7 @@ public class Tela extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(320, 320, 320)
-                        .addComponent(jBtVai))
+                        .addComponent(jBtSetDatabase))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(jLabel4)
@@ -168,7 +168,7 @@ public class Tela extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jBtVai)
+                .addComponent(jBtSetDatabase)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -197,13 +197,6 @@ public class Tela extends javax.swing.JFrame {
             }
         });
 
-        jBLer.setText("Ler");
-        jBLer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBLerActionPerformed(evt);
-            }
-        });
-
         jLabel5.setText("Nome do Arquivo");
 
         jButton1.setText("Carregar Arquivo XML");
@@ -226,20 +219,18 @@ public class Tela extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
+                        .addComponent(jLabel5)
+                        .addGap(38, 38, 38)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(38, 38, 38)
                                 .addComponent(jTfXML, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37)
                                 .addComponent(jButton1))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jBRodar)
-                                .addGap(157, 157, 157)
-                                .addComponent(jBLimpar)
-                                .addGap(158, 158, 158)
-                                .addComponent(jBLer)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(174, 174, 174)
+                                .addComponent(jBLimpar)))))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,8 +242,7 @@ public class Tela extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBRodar)
-                    .addComponent(jBLimpar)
-                    .addComponent(jBLer))
+                    .addComponent(jBLimpar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -347,7 +337,7 @@ public class Tela extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+                .addContainerGap(79, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -402,16 +392,11 @@ public class Tela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jBRodarActionPerformed
 
-    private void jBLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLerActionPerformed
-
-
-    }//GEN-LAST:event_jBLerActionPerformed
-
     private void jTdNomeDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTdNomeDataBaseActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTdNomeDataBaseActionPerformed
 
-    private void jBtVaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVaiActionPerformed
+    private void jBtSetDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtSetDatabaseActionPerformed
 
         if (cxCriar.isSelected()) {
             this.database = new Database(jTdNomeDataBase.getText());
@@ -439,7 +424,7 @@ public class Tela extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nenhuma opção selecionada!!");
         }
 
-    }//GEN-LAST:event_jBtVaiActionPerformed
+    }//GEN-LAST:event_jBtSetDatabaseActionPerformed
 
     private void trocaCorLabel(JLabel label) {
         label.setFont(new Font("TimesRoman",Font.ITALIC,18));
@@ -504,10 +489,9 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton cxCriar;
     private javax.swing.JRadioButton cxSelecionar;
-    private javax.swing.JButton jBLer;
     private javax.swing.JButton jBLimpar;
     private javax.swing.JButton jBRodar;
-    private javax.swing.JButton jBtVai;
+    private javax.swing.JButton jBtSetDatabase;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jCbDataBase;
     private javax.swing.JLabel jLabel1;
